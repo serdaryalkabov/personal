@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="icon.png">
+    <title>MindDuel - Sharpen Your Mind Through AI Debates</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: #101720;
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 30px 0;
+            position: relative;
+            z-index: 100;
+        }
+
+        .logo {
+            font-size: 32px;
+            font-weight: 800;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo-accent {
+            color: #F4511E;
+            margin: 0;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 40px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            font-size: 16px;
+        }
+
+        .nav-links a:hover {
+            color: #F4511E;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 60px 0 80px;
+            position: relative;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -200px;
+            right: -200px;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(244, 81, 30, 0.15) 0%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: -150px;
+            left: -150px;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(244, 81, 30, 0.1) 0%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .badge {
+            display: inline-block;
+            background: rgba(244, 81, 30, 0.15);
+            color: #F4511E;
+            padding: 8px 20px;
+            border-radius: 30px;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 24px;
+            border: 1px solid rgba(244, 81, 30, 0.3);
+            animation: fadeInUp 0.8s ease;
+        }
+
+        .hero h1 {
+            font-size: 72px;
+            font-weight: 900;
+            margin-bottom: 24px;
+            line-height: 1.1;
+            animation: fadeInUp 0.8s ease 0.1s;
+            animation-fill-mode: both;
+            position: relative;
+        }
+
+        .hero h1 .gradient-text {
+            background: linear-gradient(135deg, #F4511E, #FF8A65);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            font-size: 22px;
+            margin-bottom: 40px;
+            opacity: 0.85;
+            max-width: 650px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.6;
+            animation: fadeInUp 0.8s ease 0.2s;
+            animation-fill-mode: both;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            animation: fadeInUp 0.8s ease 0.4s;
+            animation-fill-mode: both;
+            margin-bottom: 80px;
+        }
+
+        .btn {
+            padding: 18px 40px;
+            border-radius: 50px;
+            font-size: 17px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #F4511E, #FF6F42);
+            color: #fff;
+            box-shadow: 0 10px 30px rgba(244, 81, 30, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(244, 81, 30, 0.4);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.05);
+            color: #fff;
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: #F4511E;
+            transform: translateY(-3px);
+        }
+
+        .phone-mockup {
+            margin: 0 auto;
+            width: 320px;
+            height: 650px;
+            background: linear-gradient(135deg, #1a1f2e, #252b3b);
+            border-radius: 45px;
+            box-shadow: 0 40px 100px rgba(0, 0, 0, 0.5);
+            padding: 18px;
+            position: relative;
+            animation: float 4s ease-in-out infinite;
+        }
+
+        .phone-notch {
+            position: absolute;
+            top: 18px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 140px;
+            height: 28px;
+            background: #101720;
+            border-radius: 0 0 20px 20px;
+            z-index: 10;
+        }
+
+        .phone-screen {
+            width: 100%;
+            height: 100%;
+            background: #101720;
+            border-radius: 35px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .screen-content {
+            padding: 50px 20px 20px;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .screen-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #F4511E, #FF6F42);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 30px rgba(244, 81, 30, 0.4);
+        }
+
+        .screen-title {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .screen-text {
+            font-size: 14px;
+            opacity: 0.7;
+            line-height: 1.5;
+        }
+
+        .features {
+            background: rgba(255, 255, 255, 0.02);
+            padding: 100px 0;
+            margin-top: 100px;
+            position: relative;
+        }
+
+        .features::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(244, 81, 30, 0.3), transparent);
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 80px;
+        }
+
+        .section-label {
+            color: #F4511E;
+            font-size: 14px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 16px;
+        }
+
+        .section-title {
+            font-size: 48px;
+            font-weight: 800;
+            margin-bottom: 20px;
+        }
+
+        .section-description {
+            font-size: 18px;
+            opacity: 0.7;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            padding: 40px;
+            border-radius: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #F4511E, #FF8A65);
+            transform: scaleX(0);
+            transition: transform 0.4s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-8px);
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(244, 81, 30, 0.3);
+            box-shadow: 0 20px 50px rgba(244, 81, 30, 0.15);
+        }
+
+        .feature-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .feature-icon {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, rgba(244, 81, 30, 0.15), rgba(244, 81, 30, 0.05));
+            border-radius: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            margin-bottom: 24px;
+            border: 1px solid rgba(244, 81, 30, 0.2);
+        }
+
+        .feature-card h3 {
+            font-size: 24px;
+            margin-bottom: 16px;
+            font-weight: 700;
+        }
+
+        .feature-card p {
+            opacity: 0.75;
+            line-height: 1.7;
+            font-size: 15px;
+        }
+
+        .how-it-works {
+            padding: 100px 0;
+            position: relative;
+        }
+
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-top: 60px;
+        }
+
+        .step {
+            text-align: center;
+            position: relative;
+        }
+
+        .step-number {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #F4511E, #FF6F42);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            font-weight: 800;
+            margin: 0 auto 24px;
+            box-shadow: 0 10px 30px rgba(244, 81, 30, 0.3);
+        }
+
+        .step h3 {
+            font-size: 22px;
+            margin-bottom: 12px;
+            font-weight: 700;
+        }
+
+        .step p {
+            opacity: 0.75;
+            line-height: 1.6;
+        }
+
+        .stats {
+            background: linear-gradient(135deg, rgba(244, 81, 30, 0.1), rgba(244, 81, 30, 0.05));
+            padding: 80px 0;
+            margin: 100px 0;
+            border-radius: 30px;
+            border: 1px solid rgba(244, 81, 30, 0.2);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 50px;
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 56px;
+            font-weight: 900;
+            color: #F4511E;
+            margin-bottom: 8px;
+        }
+
+        .stat-label {
+            font-size: 16px;
+            opacity: 0.75;
+            font-weight: 500;
+        }
+
+        .cta-section {
+            text-align: center;
+            padding: 100px 0;
+            position: relative;
+        }
+
+        .cta-section h2 {
+            font-size: 56px;
+            font-weight: 900;
+            margin-bottom: 24px;
+        }
+
+        .cta-section p {
+            font-size: 20px;
+            opacity: 0.8;
+            margin-bottom: 40px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        footer {
+            text-align: center;
+            padding: 60px 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 20px;
+            list-style: none;
+        }
+
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.6);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: #F4511E;
+        }
+
+        .copyright {
+            opacity: 0.5;
+            font-size: 14px;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0) rotate(0deg);
+            }
+            25% {
+                transform: translateY(-15px) rotate(1deg);
+            }
+            75% {
+                transform: translateY(-10px) rotate(-1deg);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 42px;
+            }
+
+            .hero p {
+                font-size: 18px;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .btn {
+                width: 100%;
+                max-width: 300px;
+            }
+
+            .section-title {
+                font-size: 36px;
+            }
+
+            .phone-mockup {
+                width: 280px;
+                height: 570px;
+            }
+
+            .feature-grid,
+            .steps {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <nav>
+            <div class="logo">Mind<span class="logo-accent">Duel</span></div>
+            <ul class="nav-links">
+                <li><a href="#features">Features</a></li>
+                <li><a href="#how-it-works">How It Works</a></li>
+                <li><a href="https://play.google.com/store/apps/details?id=com.serdaryalkabov.brightmint">Download</a></li>
+            </ul>
+        </nav>
+
+        <section class="hero">
+            <div class="badge">🎯 Powered by GPT-5</div>
+            <h1>Sharpen Your Mind<br>Through <span class="gradient-text">AI Debates</span></h1>
+            <p>Challenge yourself in structured debates with advanced AI. Improve your argumentation, critical thinking, and persuasion skills while competing on the global leaderboard.</p>
+            <div class="cta-buttons">
+                <a href="https://play.google.com/store/apps/details?id=com.serdaryalkabov.brightmint" class="btn btn-primary">Download Now</a>
+                <a href="#how-it-works" class="btn btn-secondary">See How It Works</a>
+            </div>
+            <div class="phone-mockup">
+                <div class="phone-notch"></div>
+                <div class="phone-screen">
+                    <div class="screen-content">
+                        <div class="screen-icon">⚡</div>
+                        <div class="screen-title">Ready to Debate?</div>
+                        <div class="screen-text">Choose your topic and start sharpening your argumentation skills</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <section class="features" id="features">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-label">Features</div>
+                <h2 class="section-title">Everything You Need to Master Debates</h2>
+                <p class="section-description">From voice-powered conversations to detailed performance analytics, MindDuel offers a complete debate training experience.</p>
+            </div>
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🎤</div>
+                    <h3>Voice-Powered Debates</h3>
+                    <p>Speak naturally and let our advanced speech recognition capture your arguments. AI responds with realistic voice synthesis for an authentic debate experience.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <h3>Detailed Performance Scoring</h3>
+                    <p>Get evaluated on 5 key criteria: Clarity, Logic & Structure, Evidence & Examples, Persuasiveness, and Rebuttal. Receive up to 100 points and personalized feedback after each debate.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🏆</div>
+                    <h3>Global Leaderboard</h3>
+                    <p>Compete with debaters worldwide. Track your ranking among the top 30 users and watch your debating skills climb as you improve.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🎯</div>
+                    <h3>Personalized Topics</h3>
+                    <p>Choose from diverse categories like AI in Medicine, Democracy & Governance, and more. Select topics that match your interests and expertise.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">⚙️</div>
+                    <h3>Customizable Experience</h3>
+                    <p>Adjust thinking time (5-60 seconds) and speaking time to match your style. Choose from Beginner, Intermediate, or Expert difficulty levels.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">💾</div>
+                    <h3>Debate History</h3>
+                    <p>Review all your past debates, track your improvement over time, and learn from your performance with saved AI evaluations and feedback.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="how-it-works" id="how-it-works">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-label">How It Works</div>
+                <h2 class="section-title">Start Debating in 4 Simple Steps</h2>
+            </div>
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h3>Create Your Profile</h3>
+                    <p>Sign up and select your favorite debate categories to get personalized topic recommendations.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h3>Choose a Topic</h3>
+                    <p>Browse debate topics tailored to your interests and select one that sparks your passion.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h3>Debate for 10 Rounds</h3>
+                    <p>Speak your arguments, listen to AI's rebuttals, and engage in a structured 10-round debate battle.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <h3>Get Evaluated</h3>
+                    <p>Receive detailed scoring across 5 criteria with AI-generated feedback to improve your skills.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="container">
+        <section class="stats">
+            <div class="stats-grid">
+                <div class="stat">
+                    <div class="stat-number">10</div>
+                    <div class="stat-label">Rounds Per Debate</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">100</div>
+                    <div class="stat-label">Maximum Points</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">5</div>
+                    <div class="stat-label">Scoring Criteria</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">30</div>
+                    <div class="stat-label">Top Leaderboard Spots</div>
+                </div>
+            </div>
+        </section>
+
+        <section class="cta-section" id="download">
+            <h2>Ready to Become a<br><span class="gradient-text">Master Debater?</span></h2>
+            <p>Download MindDuel today and start your journey to becoming a persuasive, logical, and confident communicator.</p>
+            <div class="cta-buttons">
+                <a href="https://play.google.com/store/apps/details?id=com.serdaryalkabov.brightmint" class="btn btn-primary">Download on Android </a>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <ul class="footer-links">
+            <li><a href="#">Privacy Policy</a></li>
+            <li><a href="#">Terms of Service</a></li>
+            <li><a href="#">Contact</a></li>
+            <li><a href="#">Support</a></li>
+        </ul>
+        <p class="copyright">© 2026 MindDuel. All rights reserved.</p>
+    </footer>
+</body>
+</html>
