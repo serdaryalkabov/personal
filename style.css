@@ -1,0 +1,44 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: 'Manrope', sans-serif;
+  background: white; /* smooth, creamy yellow (education/academic vibe) */
+  color: #1f2937;
+}
+
+.container {
+  max-width: 700px;
+  padding: 40px 24px;
+  margin: 80px auto;
+}
+
+p {
+  font-size: 1.25rem;
+  line-height: 1.7;
+  margin-bottom: 24px;
+}
+
+.intro {
+  font-size: 1.5rem;
+  font-weight: 500;
+}
+
+a {
+  color: #196175; /* brand color */
+  text-decoration: none;
+  border-bottom: 1px solid rgba(25, 97, 117, 0.3);
+  transition: border-bottom-color 0.2s;
+}
+
+a:hover {
+  border-bottom-color: rgba(25, 97, 117, 0.8);
+}
+
+hr {
+  border: none;
+  border-top: 1px dotted #d1d5db;
+  margin: 40px 0;
+}
