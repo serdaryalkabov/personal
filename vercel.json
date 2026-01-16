@@ -1,0 +1,6 @@
+{
+  "routes": [
+    { "src": "/", "dest": "/index.html" },
+    { "src": "/mindduel/(.*)", "dest": "/mindduel/$1" }
+  ]
+}
