@@ -1,693 +1,407 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="icon" href="icon.png">
-    <title>MindDuel - Sharpen Your Mind Through AI Debates</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            background: #101720;
-            color: #fff;
-            overflow-x: hidden;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-
-        nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 30px 0;
-            position: relative;
-            z-index: 100;
-        }
-
-        .logo {
-            font-size: 32px;
-            font-weight: 800;
-            color: #fff;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .logo-accent {
-            color: #F4511E;
-            margin: 0;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 40px;
-            list-style: none;
-        }
-
-        .nav-links a {
-            color: rgba(255, 255, 255, 0.8);
-            text-decoration: none;
-            font-weight: 500;
-            transition: all 0.3s ease;
-            font-size: 16px;
-        }
-
-        .nav-links a:hover {
-            color: #F4511E;
-        }
-
-        .hero {
-            text-align: center;
-            padding: 60px 0 80px;
-            position: relative;
-        }
-
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: -200px;
-            right: -200px;
-            width: 600px;
-            height: 600px;
-            background: radial-gradient(circle, rgba(244, 81, 30, 0.15) 0%, transparent 70%);
-            border-radius: 50%;
-            pointer-events: none;
-        }
-
-        .hero::after {
-            content: '';
-            position: absolute;
-            bottom: -150px;
-            left: -150px;
-            width: 500px;
-            height: 500px;
-            background: radial-gradient(circle, rgba(244, 81, 30, 0.1) 0%, transparent 70%);
-            border-radius: 50%;
-            pointer-events: none;
-        }
-
-        .badge {
-            display: inline-block;
-            background: rgba(244, 81, 30, 0.15);
-            color: #F4511E;
-            padding: 8px 20px;
-            border-radius: 30px;
-            font-size: 14px;
-            font-weight: 600;
-            margin-bottom: 24px;
-            border: 1px solid rgba(244, 81, 30, 0.3);
-            animation: fadeInUp 0.8s ease;
-        }
-
-        .hero h1 {
-            font-size: 72px;
-            font-weight: 900;
-            margin-bottom: 24px;
-            line-height: 1.1;
-            animation: fadeInUp 0.8s ease 0.1s;
-            animation-fill-mode: both;
-            position: relative;
-        }
-
-        .hero h1 .gradient-text {
-            background: linear-gradient(135deg, #F4511E, #FF8A65);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .hero p {
-            font-size: 22px;
-            margin-bottom: 40px;
-            opacity: 0.85;
-            max-width: 650px;
-            margin-left: auto;
-            margin-right: auto;
-            line-height: 1.6;
-            animation: fadeInUp 0.8s ease 0.2s;
-            animation-fill-mode: both;
-        }
-
-        .cta-buttons {
-            display: flex;
-            gap: 20px;
-            justify-content: center;
-            animation: fadeInUp 0.8s ease 0.4s;
-            animation-fill-mode: both;
-            margin-bottom: 80px;
-        }
-
-        .btn {
-            padding: 18px 40px;
-            border-radius: 50px;
-            font-size: 17px;
-            font-weight: 600;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            cursor: pointer;
-            border: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .btn-primary {
-            background: linear-gradient(135deg, #F4511E, #FF6F42);
-            color: #fff;
-            box-shadow: 0 10px 30px rgba(244, 81, 30, 0.3);
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 40px rgba(244, 81, 30, 0.4);
-        }
-
-        .btn-secondary {
-            background: rgba(255, 255, 255, 0.05);
-            color: #fff;
-            backdrop-filter: blur(10px);
-            border: 2px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .btn-secondary:hover {
-            background: rgba(255, 255, 255, 0.1);
-            border-color: #F4511E;
-            transform: translateY(-3px);
-        }
-
-        .phone-mockup {
-            margin: 0 auto;
-            width: 320px;
-            height: 650px;
-            background: linear-gradient(135deg, #1a1f2e, #252b3b);
-            border-radius: 45px;
-            box-shadow: 0 40px 100px rgba(0, 0, 0, 0.5);
-            padding: 18px;
-            position: relative;
-            animation: float 4s ease-in-out infinite;
-        }
-
-        .phone-notch {
-            position: absolute;
-            top: 18px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 140px;
-            height: 28px;
-            background: #101720;
-            border-radius: 0 0 20px 20px;
-            z-index: 10;
-        }
-
-        .phone-screen {
-            width: 100%;
-            height: 100%;
-            background: #101720;
-            border-radius: 35px;
-            overflow: hidden;
-            position: relative;
-        }
-
-        .screen-content {
-            padding: 50px 20px 20px;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-        }
-
-        .screen-icon {
-            width: 80px;
-            height: 80px;
-            background: linear-gradient(135deg, #F4511E, #FF6F42);
-            border-radius: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 40px;
-            margin-bottom: 20px;
-            box-shadow: 0 10px 30px rgba(244, 81, 30, 0.4);
-        }
-
-        .screen-title {
-            font-size: 24px;
-            font-weight: 700;
-            margin-bottom: 12px;
-        }
-
-        .screen-text {
-            font-size: 14px;
-            opacity: 0.7;
-            line-height: 1.5;
-        }
-
-        .features {
-            background: rgba(255, 255, 255, 0.02);
-            padding: 100px 0;
-            margin-top: 100px;
-            position: relative;
-        }
-
-        .features::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 1px;
-            background: linear-gradient(90deg, transparent, rgba(244, 81, 30, 0.3), transparent);
-        }
-
-        .section-header {
-            text-align: center;
-            margin-bottom: 80px;
-        }
-
-        .section-label {
-            color: #F4511E;
-            font-size: 14px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            margin-bottom: 16px;
-        }
-
-        .section-title {
-            font-size: 48px;
-            font-weight: 800;
-            margin-bottom: 20px;
-        }
-
-        .section-description {
-            font-size: 18px;
-            opacity: 0.7;
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
-        .feature-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 30px;
-        }
-
-        .feature-card {
-            background: rgba(255, 255, 255, 0.03);
-            backdrop-filter: blur(10px);
-            padding: 40px;
-            border-radius: 24px;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            transition: all 0.4s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .feature-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 3px;
-            background: linear-gradient(90deg, #F4511E, #FF8A65);
-            transform: scaleX(0);
-            transition: transform 0.4s ease;
-        }
-
-        .feature-card:hover {
-            transform: translateY(-8px);
-            background: rgba(255, 255, 255, 0.05);
-            border-color: rgba(244, 81, 30, 0.3);
-            box-shadow: 0 20px 50px rgba(244, 81, 30, 0.15);
-        }
-
-        .feature-card:hover::before {
-            transform: scaleX(1);
-        }
-
-        .feature-icon {
-            width: 70px;
-            height: 70px;
-            background: linear-gradient(135deg, rgba(244, 81, 30, 0.15), rgba(244, 81, 30, 0.05));
-            border-radius: 18px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 32px;
-            margin-bottom: 24px;
-            border: 1px solid rgba(244, 81, 30, 0.2);
-        }
-
-        .feature-card h3 {
-            font-size: 24px;
-            margin-bottom: 16px;
-            font-weight: 700;
-        }
-
-        .feature-card p {
-            opacity: 0.75;
-            line-height: 1.7;
-            font-size: 15px;
-        }
-
-        .how-it-works {
-            padding: 100px 0;
-            position: relative;
-        }
-
-        .steps {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 40px;
-            margin-top: 60px;
-        }
-
-        .step {
-            text-align: center;
-            position: relative;
-        }
-
-        .step-number {
-            width: 60px;
-            height: 60px;
-            background: linear-gradient(135deg, #F4511E, #FF6F42);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 24px;
-            font-weight: 800;
-            margin: 0 auto 24px;
-            box-shadow: 0 10px 30px rgba(244, 81, 30, 0.3);
-        }
-
-        .step h3 {
-            font-size: 22px;
-            margin-bottom: 12px;
-            font-weight: 700;
-        }
-
-        .step p {
-            opacity: 0.75;
-            line-height: 1.6;
-        }
-
-        .stats {
-            background: linear-gradient(135deg, rgba(244, 81, 30, 0.1), rgba(244, 81, 30, 0.05));
-            padding: 80px 0;
-            margin: 100px 0;
-            border-radius: 30px;
-            border: 1px solid rgba(244, 81, 30, 0.2);
-        }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 50px;
-            text-align: center;
-        }
-
-        .stat-number {
-            font-size: 56px;
-            font-weight: 900;
-            color: #F4511E;
-            margin-bottom: 8px;
-        }
-
-        .stat-label {
-            font-size: 16px;
-            opacity: 0.75;
-            font-weight: 500;
-        }
-
-        .cta-section {
-            text-align: center;
-            padding: 100px 0;
-            position: relative;
-        }
-
-        .cta-section h2 {
-            font-size: 56px;
-            font-weight: 900;
-            margin-bottom: 24px;
-        }
-
-        .cta-section p {
-            font-size: 20px;
-            opacity: 0.8;
-            margin-bottom: 40px;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        footer {
-            text-align: center;
-            padding: 60px 0;
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
-        }
-
-        .footer-links {
-            display: flex;
-            justify-content: center;
-            gap: 30px;
-            margin-bottom: 20px;
-            list-style: none;
-        }
-
-        .footer-links a {
-            color: rgba(255, 255, 255, 0.6);
-            text-decoration: none;
-            transition: color 0.3s ease;
-        }
-
-        .footer-links a:hover {
-            color: #F4511E;
-        }
-
-        .copyright {
-            opacity: 0.5;
-            font-size: 14px;
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes float {
-            0%, 100% {
-                transform: translateY(0) rotate(0deg);
-            }
-            25% {
-                transform: translateY(-15px) rotate(1deg);
-            }
-            75% {
-                transform: translateY(-10px) rotate(-1deg);
-            }
-        }
-
-        @media (max-width: 768px) {
-            .hero h1 {
-                font-size: 42px;
-            }
-
-            .hero p {
-                font-size: 18px;
-            }
-
-            .nav-links {
-                display: none;
-            }
-
-            .cta-buttons {
-                flex-direction: column;
-                align-items: center;
-            }
-
-            .btn {
-                width: 100%;
-                max-width: 300px;
-            }
-
-            .section-title {
-                font-size: 36px;
-            }
-
-            .phone-mockup {
-                width: 280px;
-                height: 570px;
-            }
-
-            .feature-grid,
-            .steps {
-                grid-template-columns: 1fr;
-            }
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MindDuel - AI Debate Practice</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap" rel="stylesheet">
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      background-color: #101720;
+      color: white;
+      font-family: 'Manrope'
+    },
+  </style>
 </head>
-<body>
-    <div class="container">
-        <nav>
-            <div class="logo">Mind<span class="logo-accent">Duel</span></div>
-            <ul class="nav-links">
-                <li><a href="#features">Features</a></li>
-                <li><a href="#how-it-works">How It Works</a></li>
-                <li><a href="https://play.google.com/store/apps/details?id=com.serdaryalkabov.brightmint">Download</a></li>
-            </ul>
-        </nav>
-
-        <section class="hero">
-            <div class="badge">🎯 Powered by GPT-5</div>
-            <h1>Sharpen Your Mind<br>Through <span class="gradient-text">AI Debates</span></h1>
-            <p>Challenge yourself in structured debates with advanced AI. Improve your argumentation, critical thinking, and persuasion skills while competing on the global leaderboard.</p>
-            <div class="cta-buttons">
-                <a href="https://play.google.com/store/apps/details?id=com.serdaryalkabov.brightmint" class="btn btn-primary">Download Now</a>
-                <a href="#how-it-works" class="btn btn-secondary">See How It Works</a>
-            </div>
-            <div class="phone-mockup">
-                <div class="phone-notch"></div>
-                <div class="phone-screen">
-                    <div class="screen-content">
-                        <div class="screen-icon">⚡</div>
-                        <div class="screen-title">Ready to Debate?</div>
-                        <div class="screen-text">Choose your topic and start sharpening your argumentation skills</div>
-                    </div>
-                </div>
-            </div>
-        </section>
+<body class="min-h-screen">
+  
+  <!-- Hero Section -->
+  <section class="relative overflow-hidden px-6 py-20 md:py-32">
+    <!-- Background gradient effects -->
+    <div class="absolute inset-0 opacity-30">
+      <div class="absolute top-0 right-0 w-96 h-96 bg-[#f4511E] rounded-full blur-3xl"></div>
+      <div class="absolute bottom-0 left-0 w-96 h-96 bg-[#f4511E] rounded-full blur-3xl"></div>
     </div>
-
-    <section class="features" id="features">
-        <div class="container">
-            <div class="section-header">
-                <div class="section-label">Features</div>
-                <h2 class="section-title">Everything You Need to Master Debates</h2>
-                <p class="section-description">From voice-powered conversations to detailed performance analytics, MindDuel offers a complete debate training experience.</p>
+    
+    <div class="relative max-w-6xl mx-auto">
+      <div class="flex items-center justify-center mb-6">
+        <img src="icon.png" class="rounded-2xl w-40 icon" width="140px" alt="MindDuel Icon" />
+      </div>
+      
+      <h1 class="text-5xl md:text-7xl font-bold text-center mb-6 tracking-tight">
+        MindDuel
+      </h1>
+      
+      <p class="text-xl md:text-2xl text-center text-gray-300 mb-4 max-w-3xl mx-auto">
+        AI Debate Practice
+      </p>
+      
+      <p class="text-lg text-center text-gray-400 mb-12 max-w-2xl mx-auto">
+        Sharpen your debating skills against advanced AI. Choose your topics, voice your arguments, and get instant feedback on your performance.
+      </p>
+      
+      <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+        <a 
+          href="https://play.google.com/store/apps/details?id=com.serdaryalkabov.brightmint"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="bg-[#f4511E] hover:bg-[#f4511E]/90 text-white px-8 py-4 rounded-lg font-semibold text-lg transition-colors flex items-center gap-2 shadow-lg shadow-[#f4511E]/20"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+          Download on Google Play
+        </a>
+      </div>
+      
+      <!-- Hero visual -->
+      <div class="mt-16 relative">
+        <div class="bg-gradient-to-br from-[#1a2332] to-[#0d1117] rounded-2xl p-8 border border-gray-800 shadow-2xl">
+          <div class="grid md:grid-cols-2 gap-6">
+            <!-- Mock debate interface -->
+            <div class="space-y-4">
+              <div class="bg-[#f4511E]/10 border border-[#f4511E]/30 rounded-lg p-4">
+                <div class="text-sm text-[#f4511E] mb-2">You</div>
+                <div class="text-gray-200">Mandatory voting ensures everyone participates in democracy...</div>
+              </div>
+              <div class="bg-blue-500/10 border border-blue-500/30 rounded-lg p-4">
+                <div class="text-sm text-blue-400 mb-2">AI Opponent</div>
+                <div class="text-gray-200">However, forcing participation may reduce the quality of votes...</div>
+              </div>
             </div>
-            <div class="feature-grid">
-                <div class="feature-card">
-                    <div class="feature-icon">🎤</div>
-                    <h3>Voice-Powered Debates</h3>
-                    <p>Speak naturally and let our advanced speech recognition capture your arguments. AI responds with realistic voice synthesis for an authentic debate experience.</p>
+            
+            <!-- Mock stats -->
+            <div class="bg-[#0d1117] rounded-lg p-6 border border-gray-800">
+              <div class="text-sm text-gray-400 mb-4">Round 3 / 10</div>
+              <div class="space-y-3">
+                <div>
+                  <div class="flex justify-between text-sm mb-1">
+                    <span class="text-gray-400">Clarity</span>
+                    <span class="text-[#f4511E]">18/20</span>
+                  </div>
+                  <div class="h-2 bg-gray-800 rounded-full overflow-hidden">
+                    <div class="h-full bg-[#f4511E] w-[90%]"></div>
+                  </div>
                 </div>
-                <div class="feature-card">
-                    <div class="feature-icon">📊</div>
-                    <h3>Detailed Performance Scoring</h3>
-                    <p>Get evaluated on 5 key criteria: Clarity, Logic & Structure, Evidence & Examples, Persuasiveness, and Rebuttal. Receive up to 100 points and personalized feedback after each debate.</p>
+                <div>
+                  <div class="flex justify-between text-sm mb-1">
+                    <span class="text-gray-400">Logic & Structure</span>
+                    <span class="text-[#f4511E]">16/20</span>
+                  </div>
+                  <div class="h-2 bg-gray-800 rounded-full overflow-hidden">
+                    <div class="h-full bg-[#f4511E] w-[80%]"></div>
+                  </div>
                 </div>
-                <div class="feature-card">
-                    <div class="feature-icon">🏆</div>
-                    <h3>Global Leaderboard</h3>
-                    <p>Compete with debaters worldwide. Track your ranking among the top 30 users and watch your debating skills climb as you improve.</p>
+                <div>
+                  <div class="flex justify-between text-sm mb-1">
+                    <span class="text-gray-400">Persuasiveness</span>
+                    <span class="text-[#f4511E]">17/20</span>
+                  </div>
+                  <div class="h-2 bg-gray-800 rounded-full overflow-hidden">
+                    <div class="h-full bg-[#f4511E] w-[85%]"></div>
+                  </div>
                 </div>
-                <div class="feature-card">
-                    <div class="feature-icon">🎯</div>
-                    <h3>Personalized Topics</h3>
-                    <p>Choose from diverse categories like AI in Medicine, Democracy & Governance, and more. Select topics that match your interests and expertise.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">⚙️</div>
-                    <h3>Customizable Experience</h3>
-                    <p>Adjust thinking time (5-60 seconds) and speaking time to match your style. Choose from Beginner, Intermediate, or Expert difficulty levels.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">💾</div>
-                    <h3>Debate History</h3>
-                    <p>Review all your past debates, track your improvement over time, and learn from your performance with saved AI evaluations and feedback.</p>
-                </div>
+              </div>
             </div>
+          </div>
         </div>
-    </section>
-
-    <section class="how-it-works" id="how-it-works">
-        <div class="container">
-            <div class="section-header">
-                <div class="section-label">How It Works</div>
-                <h2 class="section-title">Start Debating in 4 Simple Steps</h2>
-            </div>
-            <div class="steps">
-                <div class="step">
-                    <div class="step-number">1</div>
-                    <h3>Create Your Profile</h3>
-                    <p>Sign up and select your favorite debate categories to get personalized topic recommendations.</p>
-                </div>
-                <div class="step">
-                    <div class="step-number">2</div>
-                    <h3>Choose a Topic</h3>
-                    <p>Browse debate topics tailored to your interests and select one that sparks your passion.</p>
-                </div>
-                <div class="step">
-                    <div class="step-number">3</div>
-                    <h3>Debate for 10 Rounds</h3>
-                    <p>Speak your arguments, listen to AI's rebuttals, and engage in a structured 10-round debate battle.</p>
-                </div>
-                <div class="step">
-                    <div class="step-number">4</div>
-                    <h3>Get Evaluated</h3>
-                    <p>Receive detailed scoring across 5 criteria with AI-generated feedback to improve your skills.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <div class="container">
-        <section class="stats">
-            <div class="stats-grid">
-                <div class="stat">
-                    <div class="stat-number">10</div>
-                    <div class="stat-label">Rounds Per Debate</div>
-                </div>
-                <div class="stat">
-                    <div class="stat-number">100</div>
-                    <div class="stat-label">Maximum Points</div>
-                </div>
-                <div class="stat">
-                    <div class="stat-number">5</div>
-                    <div class="stat-label">Scoring Criteria</div>
-                </div>
-                <div class="stat">
-                    <div class="stat-number">30</div>
-                    <div class="stat-label">Top Leaderboard Spots</div>
-                </div>
-            </div>
-        </section>
-
-        <section class="cta-section" id="download">
-            <h2>Ready to Become a<br><span class="gradient-text">Master Debater?</span></h2>
-            <p>Download MindDuel today and start your journey to becoming a persuasive, logical, and confident communicator.</p>
-            <div class="cta-buttons">
-                <a href="https://play.google.com/store/apps/details?id=com.serdaryalkabov.brightmint" class="btn btn-primary">Download on Android </a>
-            </div>
-        </section>
+      </div>
     </div>
+  </section>
 
-    <footer>
-        <ul class="footer-links">
-            <li><a href="#">Privacy Policy</a></li>
-            <li><a href="#">Terms of Service</a></li>
-            <li><a href="#">Contact</a></li>
-            <li><a href="#">Support</a></li>
-        </ul>
-        <p class="copyright">© 2026 MindDuel. All rights reserved.</p>
-    </footer>
+  <!-- Features Section -->
+  <section class="px-6 py-20 md:py-32">
+    <div class="max-w-6xl mx-auto">
+      <div class="text-center mb-16">
+        <h2 class="text-4xl md:text-5xl font-bold mb-4">
+          Everything You Need to <span class="text-[#f4511E]">Master Debate</span>
+        </h2>
+        <p class="text-xl text-gray-400 max-w-2xl mx-auto">
+          MindDuel combines cutting-edge AI with proven debate techniques to help you become a more persuasive communicator.
+        </p>
+      </div>
+
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <!-- Feature 1 -->
+        <div class="bg-gradient-to-br from-[#1a2332] to-[#0d1117] rounded-xl p-6 border border-gray-800 hover:border-[#f4511E]/30 transition-colors">
+          <div class="w-12 h-12 bg-[#f4511E]/10 rounded-lg flex items-center justify-center mb-4">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-[#f4511E]"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"></path><path d="M19 10v2a7 7 0 0 1-14 0v-2"></path><line x1="12" x2="12" y1="19" y2="22"></line></svg>
+          </div>
+          <h3 class="text-xl font-semibold mb-2">Voice-Powered Debates</h3>
+          <p class="text-gray-400">Speak naturally and let AI transcribe your arguments in real-time. Hear AI responses with natural text-to-speech.</p>
+        </div>
+
+        <!-- Feature 2 -->
+        <div class="bg-gradient-to-br from-[#1a2332] to-[#0d1117] rounded-xl p-6 border border-gray-800 hover:border-[#f4511E]/30 transition-colors">
+          <div class="w-12 h-12 bg-[#f4511E]/10 rounded-lg flex items-center justify-center mb-4">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-[#f4511E]"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="6"></circle><circle cx="12" cy="12" r="2"></circle></svg>
+          </div>
+          <h3 class="text-xl font-semibold mb-2">Curated Topics</h3>
+          <p class="text-gray-400">Choose from categories like AI in Medicine, Democracy & Governance, and more. Always find debates that match your interests.</p>
+        </div>
+
+        <!-- Feature 3 -->
+        <div class="bg-gradient-to-br from-[#1a2332] to-[#0d1117] rounded-xl p-6 border border-gray-800 hover:border-[#f4511E]/30 transition-colors">
+          <div class="w-12 h-12 bg-[#f4511E]/10 rounded-lg flex items-center justify-center mb-4">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-[#f4511E]"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+          </div>
+          <h3 class="text-xl font-semibold mb-2">10-Round Battles</h3>
+          <p class="text-gray-400">Engage in structured debates with 10 rounds of back-and-forth arguments, giving you ample opportunity to make your case.</p>
+        </div>
+
+        <!-- Feature 4 -->
+        <div class="bg-gradient-to-br from-[#1a2332] to-[#0d1117] rounded-xl p-6 border border-gray-800 hover:border-[#f4511E]/30 transition-colors">
+          <div class="w-12 h-12 bg-[#f4511E]/10 rounded-lg flex items-center justify-center mb-4">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-[#f4511E]"><path d="M3 3v18h18"></path><path d="m19 9-5 5-4-4-3 3"></path></svg>
+          </div>
+          <h3 class="text-xl font-semibold mb-2">Detailed Evaluation</h3>
+          <p class="text-gray-400">Get scored on 5 criteria: Clarity, Logic & Structure, Evidence & Examples, Persuasiveness, and Rebuttal. 100 points total.</p>
+        </div>
+
+        <!-- Feature 5 -->
+        <div class="bg-gradient-to-br from-[#1a2332] to-[#0d1117] rounded-xl p-6 border border-gray-800 hover:border-[#f4511E]/30 transition-colors">
+          <div class="w-12 h-12 bg-[#f4511E]/10 rounded-lg flex items-center justify-center mb-4">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-[#f4511E]"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"></path><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"></path><path d="M4 22h16"></path><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"></path><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"></path><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"></path></svg>
+          </div>
+          <h3 class="text-xl font-semibold mb-2">Global Leaderboard</h3>
+          <p class="text-gray-400">Compete with debaters worldwide. Track your ranking among the top 30 users and climb to the top.</p>
+        </div>
+
+        <!-- Feature 6 -->
+        <div class="bg-gradient-to-br from-[#1a2332] to-[#0d1117] rounded-xl p-6 border border-gray-800 hover:border-[#f4511E]/30 transition-colors">
+          <div class="w-12 h-12 bg-[#f4511E]/10 rounded-lg flex items-center justify-center mb-4">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-[#f4511E]"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+          </div>
+          <h3 class="text-xl font-semibold mb-2">Customizable Settings</h3>
+          <p class="text-gray-400">Adjust thinking time (5-60s), speaking time (5-60s), and difficulty level (Beginner, Intermediate, Expert) to match your skill.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- How It Works Section -->
+  <section class="px-6 py-20 md:py-32 bg-gradient-to-b from-transparent to-[#0d1117]">
+    <div class="max-w-6xl mx-auto">
+      <div class="text-center mb-16">
+        <h2 class="text-4xl md:text-5xl font-bold mb-4">
+          How It <span class="text-[#f4511E]">Works</span>
+        </h2>
+        <p class="text-xl text-gray-400 max-w-2xl mx-auto">
+          Start debating in minutes with our simple four-step process.
+        </p>
+      </div>
+
+      <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <!-- Step 1 -->
+        <div class="relative">
+          <div class="hidden lg:block absolute top-12 left-[calc(50%+24px)] w-full h-0.5 bg-gradient-to-r from-[#f4511E]/50 to-transparent"></div>
+          <div class="relative text-center">
+            <div class="inline-flex items-center justify-center w-20 h-20 bg-[#f4511E]/10 border-2 border-[#f4511E] rounded-full mb-4 relative">
+              <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-[#f4511E]"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><line x1="19" x2="19" y1="8" y2="14"></line><line x1="22" x2="16" y1="11" y2="11"></line></svg>
+              <div class="absolute -top-2 -right-2 w-8 h-8 bg-[#f4511E] rounded-full flex items-center justify-center text-xs font-bold">01</div>
+            </div>
+            <h3 class="text-xl font-semibold mb-2">Create Account</h3>
+            <p class="text-gray-400">Sign up and select your favorite debate categories to get personalized topic recommendations.</p>
+          </div>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="relative">
+          <div class="hidden lg:block absolute top-12 left-[calc(50%+24px)] w-full h-0.5 bg-gradient-to-r from-[#f4511E]/50 to-transparent"></div>
+          <div class="relative text-center">
+            <div class="inline-flex items-center justify-center w-20 h-20 bg-[#f4511E]/10 border-2 border-[#f4511E] rounded-full mb-4 relative">
+              <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-[#f4511E]"><line x1="8" x2="21" y1="6" y2="6"></line><line x1="8" x2="21" y1="12" y2="12"></line><line x1="8" x2="21" y1="18" y2="18"></line><line x1="3" x2="3.01" y1="6" y2="6"></line><line x1="3" x2="3.01" y1="12" y2="12"></line><line x1="3" x2="3.01" y1="18" y2="18"></line></svg>
+              <div class="absolute -top-2 -right-2 w-8 h-8 bg-[#f4511E] rounded-full flex items-center justify-center text-xs font-bold">02</div>
+            </div>
+            <h3 class="text-xl font-semibold mb-2">Choose Topic</h3>
+            <p class="text-gray-400">Browse curated debate topics that match your interests and select one to begin your debate.</p>
+          </div>
+        </div>
+
+        <!-- Step 3 -->
+        <div class="relative">
+          <div class="hidden lg:block absolute top-12 left-[calc(50%+24px)] w-full h-0.5 bg-gradient-to-r from-[#f4511E]/50 to-transparent"></div>
+          <div class="relative text-center">
+            <div class="inline-flex items-center justify-center w-20 h-20 bg-[#f4511E]/10 border-2 border-[#f4511E] rounded-full mb-4 relative">
+              <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-[#f4511E]"><path d="m12 8-9.04 9.06a2.82 2.82 0 1 0 3.98 3.98L16 12"></path><circle cx="17" cy="7" r="5"></circle></svg>
+              <div class="absolute -top-2 -right-2 w-8 h-8 bg-[#f4511E] rounded-full flex items-center justify-center text-xs font-bold">03</div>
+            </div>
+            <h3 class="text-xl font-semibold mb-2">Debate with AI</h3>
+            <p class="text-gray-400">Speak your arguments for 10 rounds. AI transcribes your speech, responds with counter-arguments, and voices them back.</p>
+          </div>
+        </div>
+
+        <!-- Step 4 -->
+        <div class="relative">
+          <div class="relative text-center">
+            <div class="inline-flex items-center justify-center w-20 h-20 bg-[#f4511E]/10 border-2 border-[#f4511E] rounded-full mb-4 relative">
+              <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-[#f4511E]"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"></path><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"></path><path d="M4 22h16"></path><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"></path><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"></path><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"></path></svg>
+              <div class="absolute -top-2 -right-2 w-8 h-8 bg-[#f4511E] rounded-full flex items-center justify-center text-xs font-bold">04</div>
+            </div>
+            <h3 class="text-xl font-semibold mb-2">Get Evaluated</h3>
+            <p class="text-gray-400">Receive detailed scoring on 5 criteria with a total of 100 points and see if you won against the AI.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Example evaluation card -->
+      <div class="mt-16 bg-gradient-to-br from-[#1a2332] to-[#0d1117] rounded-2xl p-8 border border-gray-800">
+        <div class="text-center mb-8">
+          <div class="inline-flex items-center gap-2 bg-[#f4511E]/10 border border-[#f4511E]/20 rounded-full px-4 py-2 mb-4">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-[#f4511E]"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"></path><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"></path><path d="M4 22h16"></path><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"></path><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"></path><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"></path></svg>
+            <span class="text-sm text-[#f4511E]">Example Evaluation</span>
+          </div>
+          <h3 class="text-2xl font-bold">Victory! You scored 87/100</h3>
+        </div>
+        
+        <div class="grid md:grid-cols-5 gap-6 mb-6">
+          <!-- Clarity -->
+          <div class="text-center">
+            <div class="relative w-20 h-20 mx-auto mb-2">
+              <svg class="w-full h-full transform -rotate-90">
+                <circle cx="40" cy="40" r="36" stroke="#1a2332" stroke-width="8" fill="none" />
+                <circle cx="40" cy="40" r="36" stroke="#f4511E" stroke-width="8" fill="none" stroke-dasharray="226 226" stroke-linecap="round" />
+              </svg>
+              <div class="absolute inset-0 flex items-center justify-center">
+                <span class="text-xl font-bold">20</span>
+              </div>
+            </div>
+            <div class="text-sm text-gray-400">Clarity</div>
+          </div>
+          <div class="text-center">
+            <div class="relative w-20 h-20 mx-auto mb-2">
+              <svg class="w-full h-full transform -rotate-90">
+                <circle cx="40" cy="40" r="36" stroke="#1a2332" stroke-width="8" fill="none" />
+                <circle cx="40" cy="40" r="36" stroke="#f4511E" stroke-width="8" fill="none" stroke-dasharray="206.4 226" stroke-linecap="round" />
+              </svg>
+              <div class="absolute inset-0 flex items-center justify-center">
+                <span class="text-xl font-bold">18</span>
+              </div>
+            </div>
+            <div class="text-sm text-gray-400">Logic & Structure</div>
+          </div>
+          <div class="text-center">
+            <div class="relative w-20 h-20 mx-auto mb-2">
+              <svg class="w-full h-full transform -rotate-90">
+                <circle cx="40" cy="40" r="36" stroke="#1a2332" stroke-width="8" fill="none" />
+                <circle cx="40" cy="40" r="36" stroke="#f4511E" stroke-width="8" fill="none" stroke-dasharray="160.4 226" stroke-linecap="round" />
+              </svg>
+              <div class="absolute inset-0 flex items-center justify-center">
+                <span class="text-xl font-bold">14</span>
+              </div>
+            </div>
+            <div class="text-sm text-gray-400">Evidence & Examples</div>
+          </div>
+          <div class="text-center">
+            <div class="relative w-20 h-20 mx-auto mb-2">
+              <svg class="w-full h-full transform -rotate-90">
+                <circle cx="40" cy="40" r="36" stroke="#1a2332" stroke-width="8" fill="none" />
+                <circle cx="40" cy="40" r="36" stroke="#f4511E" stroke-width="8" fill="none" stroke-dasharray="208.4 226" stroke-linecap="round" />
+              </svg>
+              <div class="absolute inset-0 flex items-center justify-center">
+                <span class="text-xl font-bold">19</span>
+              </div>
+            </div>
+            <div class="text-sm text-gray-400">Persuasiveness</div>
+          </div>
+          <div class="text-center">
+            <div class="relative w-20 h-20 mx-auto mb-2">
+              <svg class="w-full h-full transform -rotate-90">
+                <circle cx="40" cy="40" r="36" stroke="#1a2332" stroke-width="8" fill="none" />
+                <circle cx="40" cy="40" r="36" stroke="#f4511E" stroke-width="8" fill="none" stroke-dasharray="203.4 226" stroke-linecap="round" />
+              </svg>
+              <div class="absolute inset-0 flex items-center justify-center">
+                <span class="text-xl font-bold">17</span>
+              </div>
+            </div>
+            <div class="text-sm text-gray-400">Rebuttal</div>
+          </div>
+        </div>
+        
+        <div class="bg-[#0d1117] rounded-lg p-4 border border-gray-800">
+          <p class="text-gray-300 text-center italic">
+            "Your arguments demonstrated strong clarity and persuasiveness with well-structured rebuttals. Consider incorporating more concrete evidence and examples to strengthen future debates and achieve even higher scores."
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Download Section -->
+  <section class="px-6 py-20 md:py-32">
+    <div class="max-w-4xl mx-auto">
+      <div class="bg-gradient-to-br from-[#f4511E] to-[#d63e16] rounded-3xl p-12 text-center relative overflow-hidden">
+        <!-- Decorative elements -->
+        <div class="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full blur-3xl"></div>
+        <div class="absolute bottom-0 left-0 w-64 h-64 bg-white/5 rounded-full blur-3xl"></div>
+        
+        <div class="relative">
+          <div class="flex items-center justify-center gap-1 mb-4">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="white" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="white" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="white" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="white" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="white" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+          </div>
+          
+          <h2 class="text-4xl md:text-5xl font-bold mb-4">
+            Ready to Start Debating?
+          </h2>
+          
+          <p class="text-xl mb-8 text-white/90 max-w-2xl mx-auto">
+            Join thousands of users sharpening their debate skills with AI. Download MindDuel today and start your journey to becoming a master debater.
+          </p>
+          
+          <a 
+            href="https://play.google.com/store/apps/details?id=com.serdaryalkabov.brightmint"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-3 bg-white text-[#f4511E] px-8 py-4 rounded-lg font-semibold text-lg hover:bg-gray-100 transition-colors shadow-xl"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" x2="12" y1="15" y2="3"></line></svg>
+            Download on Google Play
+          </a>
+          
+          <div class="mt-8 flex flex-col sm:flex-row items-center justify-center gap-6 text-white/80">
+            <div class="flex items-center gap-2">
+              <div class="w-2 h-2 bg-white rounded-full"></div>
+              <span>Free to Download</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <div class="w-2 h-2 bg-white rounded-full"></div>
+              <span>AI-Powered</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <div class="w-2 h-2 bg-white rounded-full"></div>
+              <span>Real-time Feedback</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="px-6 py-12 border-t border-gray-800">
+    <div class="max-w-6xl mx-auto">
+      <div class="grid md:grid-cols-4 gap-8 mb-8">
+        <div class="md:col-span-2">
+          <div class="flex items-center gap-2 mb-4">
+            <span class="text-xl font-bold">MindDuel</span>
+          </div>
+          <p class="text-gray-400 mb-4 max-w-sm">
+            The ultimate platform for sharpening your debating skills against advanced AI. Engage, learn, and win.
+          </p>
+        </div>
+      </div>
+      
+      <div class="pt-8 border-t border-gray-800 text-center text-gray-400">
+        <p>&copy; 2026 MindDuel. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
 </body>
 </html>
