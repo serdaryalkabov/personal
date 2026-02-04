@@ -1,0 +1,818 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Bites - AI-Powered Calorie Tracking, Refined</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --accent: #DCFF4E;
+            --black: #000000;
+            --white: #ffffff;
+            --gray-100: #f8f8f8;
+            --gray-200: #e8e8e8;
+            --gray-300: #d0d0d0;
+            --gray-700: #333333;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--white);
+            color: var(--black);
+            overflow-x: hidden;
+            line-height: 1.6;
+            font-weight: 400;
+        }
+
+        .manrope {
+            font-family: 'Manrope', sans-serif;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 1.75rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.75);
+            backdrop-filter: blur(24px);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+            animation: slideDown 1s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        @keyframes slideDown {
+            from {
+                transform: translateY(-100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .logo {
+            font-family: 'Manrope', sans-serif;
+            font-size: 1.4rem;
+            font-weight: 700;
+            letter-spacing: -0.03em;
+            color: var(--black);
+        }
+
+        .pill-button {
+            background: var(--black);
+            color: var(--white);
+            border: none;
+            padding: 0.75rem 2rem;
+            border-radius: 50px;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            letter-spacing: -0.01em;
+        }
+
+        .pill-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+        }
+
+        .pill-button.accent {
+            background: var(--accent);
+            color: var(--black);
+            font-weight: 600;
+        }
+
+        .pill-button.accent:hover {
+            box-shadow: 0 12px 32px rgba(220, 255, 78, 0.4);
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            padding: 8rem 5% 4rem;
+            background: linear-gradient(135deg, #ffffff 0%, #fafafa 100%);
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 80%;
+            height: 150%;
+            background: radial-gradient(circle, rgba(220, 255, 78, 0.08) 0%, transparent 70%);
+            animation: float 20s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(-30px, 30px) scale(1.05); }
+        }
+
+        .hero-content {
+            max-width: 1400px;
+            width: 100%;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 6rem;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-text h1 {
+            font-family: 'Manrope', sans-serif;
+            font-size: clamp(3rem, 7vw, 5.5rem);
+            font-weight: 700;
+            line-height: 1.1;
+            letter-spacing: -0.04em;
+            margin-bottom: 1.5rem;
+            animation: fadeInUp 1s cubic-bezier(0.16, 1, 0.3, 1) 0.2s backwards;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero-text p {
+            font-size: 1.25rem;
+            line-height: 1.7;
+            color: var(--gray-700);
+            margin-bottom: 3rem;
+            font-weight: 400;
+            animation: fadeInUp 1s cubic-bezier(0.16, 1, 0.3, 1) 0.4s backwards;
+        }
+
+        .waitlist-form {
+            display: flex;
+            gap: 1rem;
+            max-width: 500px;
+            animation: fadeInUp 1s cubic-bezier(0.16, 1, 0.3, 1) 0.6s backwards;
+        }
+
+        .email-input {
+            flex: 1;
+            padding: 1rem 1.5rem;
+            border: 2px solid var(--gray-200);
+            border-radius: 50px;
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem;
+            transition: all 0.3s;
+            background: var(--white);
+        }
+
+        .email-input:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 4px rgba(220, 255, 78, 0.1);
+        }
+
+        .hero-visual {
+            position: relative;
+            animation: fadeInUp 1s cubic-bezier(0.16, 1, 0.3, 1) 0.8s backwards;
+        }
+
+        .phone-mockup {
+            position: relative;
+            width: 50%;
+            max-width: 400px;
+            margin: 0 auto;
+            aspect-ratio: 9/19;
+            background: var(--black);
+            border-radius: 50px;
+            padding: 12px;
+            box-shadow: 0 40px 80px rgba(0, 0, 0, 0.25);
+            animation: floatPhone 6s ease-in-out infinite;
+        }
+
+        @keyframes floatPhone {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .phone-screen {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%);
+            border-radius: 42px;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            padding: 3rem 1.5rem;
+        }
+
+        .screen-glow {
+            position: absolute;
+            top: 20%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 70%;
+            height: 40%;
+            background: radial-gradient(circle, var(--accent) 0%, transparent 70%);
+            opacity: 0.15;
+            filter: blur(40px);
+        }
+
+        .scan-animation {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+        }
+
+        .scan-icon {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 2rem;
+            border: 3px solid var(--accent);
+            border-radius: 20px;
+            position: relative;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.05); opacity: 0.8; }
+        }
+
+        .scan-icon::before,
+        .scan-icon::after {
+            content: '';
+            position: absolute;
+            background: var(--accent);
+        }
+
+        .scan-icon::before {
+            top: 10px;
+            left: 10px;
+            right: 10px;
+            height: 3px;
+            animation: scanLine 2s ease-in-out infinite;
+        }
+
+        @keyframes scanLine {
+            0%, 100% { transform: translateY(0); opacity: 1; }
+            50% { transform: translateY(90px); opacity: 0.5; }
+        }
+
+        .scan-text {
+            color: var(--accent);
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        /* Features Section */
+        .features {
+            padding: 8rem 5%;
+            background: var(--white);
+        }
+
+        .section-header {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 5rem;
+        }
+
+        .section-header h2 {
+            font-family: 'Manrope', sans-serif;
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 700;
+            letter-spacing: -0.03em;
+            margin-bottom: 1.5rem;
+        }
+
+        .section-header p {
+            font-size: 1.2rem;
+            color: var(--gray-700);
+            line-height: 1.7;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2.5rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .feature-card {
+            background: var(--gray-100);
+            border-radius: 30px;
+            padding: 3rem;
+            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+            border: 1px solid transparent;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 24px 48px rgba(0, 0, 0, 0.08);
+            border-color: var(--accent);
+        }
+
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--black);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+        }
+
+        ./*feature-card:nth-child(2) .feature-icon {
+            background: var(--accent);
+        }*/
+
+        .feature-card h3 {
+            font-family: 'Manrope', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            letter-spacing: -0.02em;
+        }
+
+        .feature-card p {
+            color: var(--gray-700);
+            line-height: 1.7;
+            font-size: 1.05rem;
+        }
+
+        /* How It Works */
+        .how-it-works {
+            padding: 8rem 5%;
+            background: var(--black);
+            color: var(--white);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .how-it-works::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -20%;
+            width: 80%;
+            height: 150%;
+            background: radial-gradient(circle, rgba(220, 255, 78, 0.05) 0%, transparent 70%);
+        }
+
+        .steps {
+            max-width: 1000px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .step {
+            display: grid;
+            grid-template-columns: 100px 1fr;
+            gap: 3rem;
+            margin-bottom: 4rem;
+            align-items: start;
+            opacity: 0;
+            animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        .step:nth-child(1) { animation-delay: 0.2s; }
+        .step:nth-child(2) { animation-delay: 0.4s; }
+        .step:nth-child(3) { animation-delay: 0.6s; }
+        .step:nth-child(4) { animation-delay: 0.8s; }
+
+        .step-number {
+            font-family: 'Manrope', sans-serif;
+            font-size: 4rem;
+            font-weight: 700;
+            color: var(--accent);
+            line-height: 1;
+            letter-spacing: -0.03em;
+        }
+
+        .step-content h3 {
+            font-family: 'Manrope', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            letter-spacing: -0.02em;
+        }
+
+        .step-content p {
+            color: var(--gray-300);
+            line-height: 1.7;
+            font-size: 1.1rem;
+        }
+
+        /* Control Section */
+        .control-section {
+            padding: 8rem 5%;
+            background: linear-gradient(180deg, var(--white) 0%, var(--gray-100) 100%);
+        }
+
+        .control-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .control-content h2 {
+            font-family: 'Manrope', sans-serif;
+            font-size: clamp(2.5rem, 5vw, 4.5rem);
+            font-weight: 700;
+            letter-spacing: -0.03em;
+            margin-bottom: 2rem;
+        }
+
+        .control-content p {
+            font-size: 1.3rem;
+            color: var(--gray-700);
+            margin-bottom: 3rem;
+            line-height: 1.7;
+        }
+
+        .bias-options {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin: 3rem 0;
+        }
+
+        .bias-pill {
+            padding: 1rem 2rem;
+            background: var(--white);
+            border: 2px solid var(--gray-200);
+            border-radius: 50px;
+            font-family: 'Inter', sans-serif;
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            cursor: pointer;
+        }
+
+        .bias-pill:hover {
+            border-color: var(--accent);
+            background: var(--accent);
+            transform: translateY(-2px);
+        }
+
+        /* CTA Section */
+        .cta-section {
+            padding: 8rem 5%;
+            background: var(--black);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-section::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(220, 255, 78, 0.1) 0%, transparent 70%);
+            animation: pulse 4s ease-in-out infinite;
+        }
+
+        .cta-content {
+            position: relative;
+            z-index: 1;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .cta-content h2 {
+            font-family: 'Manrope', sans-serif;
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 700;
+            color: var(--white);
+            letter-spacing: -0.03em;
+            margin-bottom: 2rem;
+        }
+
+        .cta-content p {
+            font-size: 1.3rem;
+            color: var(--gray-300);
+            margin-bottom: 3rem;
+        }
+
+        /* Footer */
+        footer {
+            padding: 4rem 5%;
+            background: var(--black);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
+            color: var(--gray-300);
+        }
+
+        footer p {
+            font-size: 0.95rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 968px) {
+            nav {
+                padding: 1.5rem 5%;
+            }
+
+            .phone-mockup {
+                width: 100%;
+            }
+
+            .hero-content {
+                grid-template-columns: 1fr;
+                gap: 4rem;
+                text-align: center;
+            }
+
+            .hero-text h1 {
+                font-size: clamp(2.5rem, 8vw, 4rem);
+            }
+
+            .waitlist-form {
+                margin: 0 auto;
+            }
+
+            .phone-mockup {
+                max-width: 300px;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .step {
+                grid-template-columns: 80px 1fr;
+                gap: 2rem;
+            }
+
+            .step-number {
+                font-size: 3rem;
+            }
+
+            .bias-options {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .bias-pill {
+                width: 100%;
+                max-width: 300px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="logo">Smart Bites</div>
+        <button class="pill-button accent">Join Waitlist</button>
+    </nav>
+
+    <section class="hero">
+        <div class="hero-content">
+            <div class="hero-text">
+                <h1 class="manrope">Calorie tracking that respects your intelligence</h1>
+                <p>AI-powered nutrition analysis with unprecedented control. Take a photo, get instant insights, and customize every detail to your preference.</p>
+                <form action='https://formspree.io/f/meoppnoz' method="POST" class="waitlist-form">
+                    <input type="email" class="email-input" placeholder="Enter your email to join the waitlist" required>
+        <input type="hidden" name='username' value="SMART-BITES WAITLIST" placeholder="Enter your email" class="email-input">
+                    <button type="submit" class="pill-button accent">Join</button>
+                </form>
+            </div>
+            <div class="hero-visual">
+                <div class="phone-mockup">
+                    <div class="phone-screen">
+                        <div class="screen-glow"></div>
+                        <div class="scan-animation">
+                            <div class="scan-icon"></div>
+                            <div class="scan-text">Analyzing...</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="features">
+        <div class="section-header">
+            <h2 class="manrope">Built for precision, designed for you</h2>
+            <p>Smart Bites doesn't just count calories—it gives you complete transparency and control over your nutrition tracking.</p>
+        </div>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">📸</div>
+                <h3>Instant AI Analysis</h3>
+                <p>Simply photograph your meal. Our AI identifies ingredients, estimates portions, and calculates macros in seconds.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">⚖️</div>
+                <h3>Choose Your Bias</h3>
+                <p>AI estimations aren't perfect. You decide whether the app underestimates or overestimates—putting you in control of the margin of error.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">✏️</div>
+                <h3>Full Editing Control</h3>
+                <p>Review ingredients, adjust portions, add or remove items, and watch the AI recalculate everything in real-time.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">💾</div>
+                <h3>Save Your Meals</h3>
+                <p>Create a library of your frequent meals. Track your favorites instantly without re-scanning every time.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🎯</div>
+                <h3>Complete Transparency</h3>
+                <p>See the breakdown of every ingredient with weights, calories, carbs, protein, and fats—all clearly displayed.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🔬</div>
+                <h3>Precision Nutrition</h3>
+                <p>Whether you're cutting, bulking, or maintaining, Smart Bites adapts to your nutritional goals with surgical precision.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="how-it-works">
+        <div class="section-header">
+            <h2 class="manrope">How it works</h2>
+            <p>Four simple steps to complete nutritional awareness</p>
+        </div>
+        <div class="steps">
+            <div class="step">
+                <div class="step-number">01</div>
+                <div class="step-content">
+                    <h3>Set Your Preference</h3>
+                    <p>During onboarding, choose your estimation bias. From "Underestimate More" to "Overestimate More," you're in control of how the AI rounds its calculations.</p>
+                </div>
+            </div>
+            <div class="step">
+                <div class="step-number">02</div>
+                <div class="step-content">
+                    <h3>Capture Your Meal</h3>
+                    <p>Take a photo of your food. Our AI instantly recognizes ingredients, estimates portion sizes, and provides a detailed breakdown.</p>
+                </div>
+            </div>
+            <div class="step">
+                <div class="step-number">03</div>
+                <div class="step-content">
+                    <h3>Refine the Details</h3>
+                    <p>Review and edit everything. Adjust weights, add missing ingredients, remove incorrect items, or change the description. The AI recalculates automatically.</p>
+                </div>
+            </div>
+            <div class="step">
+                <div class="step-number">04</div>
+                <div class="step-content">
+                    <h3>Track & Save</h3>
+                    <p>View your complete nutritional data. Save frequent meals to your library for instant tracking next time.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="control-section">
+        <div class="control-content">
+            <h2 class="manrope">You control the estimation</h2>
+            <p>Choose how conservative or aggressive you want the AI to be with its calorie calculations. Perfect for different goals and preferences.</p>
+            <div class="bias-options">
+                <div class="bias-pill">Underestimate More</div>
+                <div class="bias-pill">Underestimate</div>
+                <div class="bias-pill">Normal</div>
+                <div class="bias-pill">Overestimate</div>
+                <div class="bias-pill">Overestimate More</div>
+            </div>
+        </div>
+    </section>
+
+    <section class="cta-section">
+        <div class="cta-content">
+            <h2 class="manrope">Ready to take control?</h2>
+            <p>Join the waitlist and be among the first to experience the future of intelligent calorie tracking.</p>
+            <form id="form2" action='https://formspree.io/f/meoppnoz' method="POST" class="waitlist-form" style="margin: 0 auto;" >
+        <input type="hidden" name='username' value="SMART-BITES WAITLIST" placeholder="Enter your email" class="email-input">
+                <input type="email" class="email-input" placeholder="Enter your email" required>
+                <button type="submit" class="pill-button accent">Join</button>
+            </form>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2026 Smart Bites. All rights reserved.</p>
+    </footer>
+
+<script>
+  const form = document.querySelector("form");
+
+  const form2 = document.getElementById('form2')
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const data = new FormData(form);
+
+    const response = await fetch(form.action, {
+      method: form.method,
+      body: data,
+      headers: { 'Accept': 'application/json' }
+    });
+
+    if (response.ok) {
+      alert("Thank you for joining the waitlist!");
+      form.reset();
+    } else {
+      alert("Oops! Something went wrong.");
+    }
+  });
+
+
+  form2.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const data = new FormData(form);
+
+    const response = await fetch(form.action, {
+      method: form.method,
+      body: data,
+      headers: { 'Accept': 'application/json' }
+    });
+
+    if (response.ok) {
+      alert("Thank you for joining the waitlist!");
+      form.reset();
+    } else {
+      alert("Oops! Something went wrong.");
+    }
+  });
+</script>
+
+    <script>
+        function handleSubmit(event) {
+            event.preventDefault();
+            const email = event.target.querySelector('input[type="email"]').value;
+            alert(`Thank you! We'll contact you at ${email} when Smart Bites launches.`);
+            event.target.reset();
+        }
+
+        // Smooth scroll for nav button
+        document.querySelectorAll('nav .pill-button').forEach(button => {
+            button.addEventListener('click', () => {
+                document.querySelector('.cta-section').scrollIntoView({ 
+                    behavior: 'smooth' 
+                });
+            });
+        });
+
+        // Intersection Observer for animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.feature-card').forEach(card => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(30px)';
+            card.style.transition = 'all 0.8s cubic-bezier(0.16, 1, 0.3, 1)';
+            observer.observe(card);
+        });
+    </script>
+</body>
+</html>
