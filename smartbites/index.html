@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Smart Bites - AI-Powered Calorie Tracking, Refined</title>
+    <title>SmartBites - AI Calorie Tracking with Full Transparency</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -15,26 +15,31 @@
         }
 
         :root {
-            --accent: #DCFF4E;
+            --primary: #4f46e5;
+            --primary-dark: #4338ca;
+            --primary-light: #6366f1;
             --black: #000000;
             --white: #ffffff;
-            --gray-100: #f8f8f8;
-            --gray-200: #e8e8e8;
-            --gray-300: #d0d0d0;
-            --gray-700: #333333;
+            --gray-50: #fafafa;
+            --gray-100: #f5f5f5;
+            --gray-200: #e5e5e5;
+            --gray-800: #1a1a1a;
         }
 
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
             background: var(--white);
             color: var(--black);
-            overflow-x: hidden;
             line-height: 1.6;
-            font-weight: 400;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
 
-        .manrope {
+        h1, h2, h3, h4 {
             font-family: 'Manrope', sans-serif;
+            font-weight: 700;
+            line-height: 1.1;
         }
 
         /* Navigation */
@@ -44,14 +49,14 @@
             left: 0;
             right: 0;
             z-index: 1000;
-            padding: 1.75rem 5%;
+            padding: 1.5rem 3rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: rgba(255, 255, 255, 0.75);
-            backdrop-filter: blur(24px);
-            border-bottom: 1px solid rgba(0, 0, 0, 0.06);
-            animation: slideDown 1s cubic-bezier(0.16, 1, 0.3, 1);
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            animation: slideDown 0.6s ease-out;
         }
 
         @keyframes slideDown {
@@ -67,39 +72,33 @@
 
         .logo {
             font-family: 'Manrope', sans-serif;
-            font-size: 1.4rem;
-            font-weight: 700;
-            letter-spacing: -0.03em;
+            font-size: 1.5rem;
+            font-weight: 800;
             color: var(--black);
+            letter-spacing: -0.02em;
         }
 
-        .pill-button {
+        .logo span {
+            color: var(--primary);
+        }
+
+        .nav-cta {
             background: var(--black);
             color: var(--white);
-            border: none;
             padding: 0.75rem 2rem;
             border-radius: 50px;
-            font-family: 'Inter', sans-serif;
-            font-size: 0.9rem;
+            text-decoration: none;
             font-weight: 500;
-            cursor: pointer;
-            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-            letter-spacing: -0.01em;
+            font-size: 0.95rem;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 2px solid var(--black);
         }
 
-        .pill-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
-        }
-
-        .pill-button.accent {
-            background: var(--accent);
+        .nav-cta:hover {
+            background: var(--white);
             color: var(--black);
-            font-weight: 600;
-        }
-
-        .pill-button.accent:hover {
-            box-shadow: 0 12px 32px rgba(220, 255, 78, 0.4);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
         }
 
         /* Hero Section */
@@ -108,10 +107,10 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            padding: 8rem 3rem 4rem;
             position: relative;
-            padding: 8rem 5% 4rem;
-            background: linear-gradient(135deg, #ffffff 0%, #fafafa 100%);
             overflow: hidden;
+            background: linear-gradient(135deg, #fafafa 0%, #ffffff 50%, #f5f5f5 100%);
         }
 
         .hero::before {
@@ -119,42 +118,31 @@
             position: absolute;
             top: -50%;
             right: -20%;
-            width: 80%;
+            width: 100%;
             height: 150%;
-            background: radial-gradient(circle, rgba(220, 255, 78, 0.08) 0%, transparent 70%);
+            background: radial-gradient(circle, rgba(79, 70, 229, 0.08) 0%, transparent 70%);
             animation: float 20s ease-in-out infinite;
         }
 
         @keyframes float {
-            0%, 100% { transform: translate(0, 0) scale(1); }
-            50% { transform: translate(-30px, 30px) scale(1.05); }
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            33% { transform: translate(30px, -30px) rotate(5deg); }
+            66% { transform: translate(-20px, 20px) rotate(-5deg); }
         }
 
         .hero-content {
-            max-width: 1400px;
+            max-width: 1200px;
             width: 100%;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 6rem;
-            align-items: center;
+            text-align: center;
             position: relative;
             z-index: 1;
-        }
-
-        .hero-text h1 {
-            font-family: 'Manrope', sans-serif;
-            font-size: clamp(3rem, 7vw, 5.5rem);
-            font-weight: 700;
-            line-height: 1.1;
-            letter-spacing: -0.04em;
-            margin-bottom: 1.5rem;
-            animation: fadeInUp 1s cubic-bezier(0.16, 1, 0.3, 1) 0.2s backwards;
+            animation: fadeInUp 0.8s ease-out 0.2s both;
         }
 
         @keyframes fadeInUp {
             from {
                 opacity: 0;
-                transform: translateY(40px);
+                transform: translateY(30px);
             }
             to {
                 opacity: 1;
@@ -162,138 +150,92 @@
             }
         }
 
-        .hero-text p {
-            font-size: 1.25rem;
-            line-height: 1.7;
-            color: var(--gray-700);
-            margin-bottom: 3rem;
-            font-weight: 400;
-            animation: fadeInUp 1s cubic-bezier(0.16, 1, 0.3, 1) 0.4s backwards;
-        }
-
-        .waitlist-form {
-            display: flex;
-            gap: 1rem;
-            max-width: 500px;
-            animation: fadeInUp 1s cubic-bezier(0.16, 1, 0.3, 1) 0.6s backwards;
-        }
-
-        .email-input {
-            flex: 1;
-            padding: 1rem 1.5rem;
-            border: 2px solid var(--gray-200);
-            border-radius: 50px;
-            font-family: 'Inter', sans-serif;
-            font-size: 1rem;
-            transition: all 0.3s;
-            background: var(--white);
-        }
-
-        .email-input:focus {
-            outline: none;
-            border-color: var(--accent);
-            box-shadow: 0 0 0 4px rgba(220, 255, 78, 0.1);
-        }
-
-        .hero-visual {
-            position: relative;
-            animation: fadeInUp 1s cubic-bezier(0.16, 1, 0.3, 1) 0.8s backwards;
-        }
-
-        .phone-mockup {
-            position: relative;
-            width: 50%;
-            max-width: 400px;
-            margin: 0 auto;
-            aspect-ratio: 9/19;
+        .hero-badge {
+            display: inline-block;
             background: var(--black);
+            color: var(--white);
+            padding: 0.5rem 1.5rem;
             border-radius: 50px;
-            padding: 12px;
-            box-shadow: 0 40px 80px rgba(0, 0, 0, 0.25);
-            animation: floatPhone 6s ease-in-out infinite;
+            font-size: 0.875rem;
+            font-weight: 500;
+            margin-bottom: 2rem;
+            letter-spacing: 0.02em;
+            animation: fadeInUp 0.8s ease-out 0.3s both;
         }
 
-        @keyframes floatPhone {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-20px); }
+        .hero h1 {
+            font-size: clamp(2.5rem, 8vw, 5.5rem);
+            margin-bottom: 1.5rem;
+            letter-spacing: -0.03em;
+            animation: fadeInUp 0.8s ease-out 0.4s both;
         }
 
-        .phone-screen {
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%);
-            border-radius: 42px;
-            position: relative;
-            overflow: hidden;
+        .hero h1 .gradient-text {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-subtitle {
+            font-size: clamp(1.1rem, 2vw, 1.5rem);
+            color: #666;
+            max-width: 700px;
+            margin: 0 auto 3rem;
+            font-weight: 400;
+            line-height: 1.7;
+            animation: fadeInUp 0.8s ease-out 0.5s both;
+        }
+
+        .hero-cta-group {
             display: flex;
-            flex-direction: column;
-            padding: 3rem 1.5rem;
+            gap: 1.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            animation: fadeInUp 0.8s ease-out 0.6s both;
         }
 
-        .screen-glow {
-            position: absolute;
-            top: 20%;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 70%;
-            height: 40%;
-            background: radial-gradient(circle, var(--accent) 0%, transparent 70%);
-            opacity: 0.15;
-            filter: blur(40px);
-        }
-
-        .scan-animation {
-            position: relative;
-            z-index: 2;
-            text-align: center;
-        }
-
-        .scan-icon {
-            width: 120px;
-            height: 120px;
-            margin: 0 auto 2rem;
-            border: 3px solid var(--accent);
-            border-radius: 20px;
-            position: relative;
-            animation: pulse 2s ease-in-out infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); opacity: 1; }
-            50% { transform: scale(1.05); opacity: 0.8; }
-        }
-
-        .scan-icon::before,
-        .scan-icon::after {
-            content: '';
-            position: absolute;
-            background: var(--accent);
-        }
-
-        .scan-icon::before {
-            top: 10px;
-            left: 10px;
-            right: 10px;
-            height: 3px;
-            animation: scanLine 2s ease-in-out infinite;
-        }
-
-        @keyframes scanLine {
-            0%, 100% { transform: translateY(0); opacity: 1; }
-            50% { transform: translateY(90px); opacity: 0.5; }
-        }
-
-        .scan-text {
-            color: var(--accent);
-            font-size: 0.9rem;
+        .btn {
+            padding: 1.1rem 3rem;
+            border-radius: 50px;
             font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
+            font-size: 1rem;
+            text-decoration: none;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 2px solid transparent;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: var(--white);
+            border-color: var(--primary);
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-3px);
+            box-shadow: 0 20px 40px rgba(79, 70, 229, 0.3);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--black);
+            border-color: var(--black);
+        }
+
+        .btn-secondary:hover {
+            background: var(--black);
+            color: var(--white);
+            transform: translateY(-3px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
         }
 
         /* Features Section */
         .features {
-            padding: 8rem 5%;
+            padding: 8rem 3rem;
             background: var(--white);
         }
 
@@ -303,496 +245,886 @@
             margin: 0 auto 5rem;
         }
 
-        .section-header h2 {
-            font-family: 'Manrope', sans-serif;
-            font-size: clamp(2.5rem, 5vw, 4rem);
-            font-weight: 700;
-            letter-spacing: -0.03em;
+        .section-label {
+            display: inline-block;
+            background: var(--black);
+            color: var(--white);
+            padding: 0.5rem 1.5rem;
+            border-radius: 50px;
+            font-size: 0.875rem;
+            font-weight: 600;
             margin-bottom: 1.5rem;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
         }
 
-        .section-header p {
-            font-size: 1.2rem;
-            color: var(--gray-700);
-            line-height: 1.7;
+        .section-title {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            margin-bottom: 1.5rem;
+            letter-spacing: -0.02em;
+        }
+
+        .section-description {
+            font-size: 1.25rem;
+            color: #666;
+            line-height: 1.8;
         }
 
         .features-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 2.5rem;
-            max-width: 1400px;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
             margin: 0 auto;
         }
 
         .feature-card {
-            background: var(--gray-100);
-            border-radius: 30px;
-            padding: 3rem;
-            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+            background: var(--gray-50);
+            border-radius: 24px;
+            padding: 3rem 2.5rem;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             border: 1px solid transparent;
         }
 
         .feature-card:hover {
             transform: translateY(-8px);
-            box-shadow: 0 24px 48px rgba(0, 0, 0, 0.08);
-            border-color: var(--accent);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.08);
+            border-color: var(--primary);
+            background: var(--white);
         }
 
         .feature-icon {
-            width: 60px;
-            height: 60px;
-            background: var(--black);
-            border-radius: 50%;
+            width: 56px;
+            height: 56px;
+            background: var(--primary);
+            border-radius: 16px;
             display: flex;
             align-items: center;
             justify-content: center;
             margin-bottom: 1.5rem;
-            font-size: 1.5rem;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        ./*feature-card:nth-child(2) .feature-icon {
-            background: var(--accent);
-        }*/
+        .feature-icon svg {
+            width: 28px;
+            height: 28px;
+            stroke: white;
+            fill: none;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .feature-card:hover .feature-icon {
+            transform: scale(1.1) rotate(5deg);
+            background: var(--primary-dark);
+        }
 
         .feature-card h3 {
-            font-family: 'Manrope', sans-serif;
             font-size: 1.5rem;
-            font-weight: 700;
             margin-bottom: 1rem;
-            letter-spacing: -0.02em;
+            letter-spacing: -0.01em;
         }
 
         .feature-card p {
-            color: var(--gray-700);
+            color: #666;
             line-height: 1.7;
-            font-size: 1.05rem;
+            font-size: 1rem;
         }
 
-        /* How It Works */
-        .how-it-works {
-            padding: 8rem 5%;
+        /* Transparency Section */
+        .transparency {
+            padding: 8rem 3rem;
             background: var(--black);
             color: var(--white);
             position: relative;
             overflow: hidden;
         }
 
-        .how-it-works::before {
+        .transparency::before {
             content: '';
             position: absolute;
-            top: -50%;
-            left: -20%;
-            width: 80%;
-            height: 150%;
-            background: radial-gradient(circle, rgba(220, 255, 78, 0.05) 0%, transparent 70%);
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
         }
 
-        .steps {
-            max-width: 1000px;
+        .transparency-content {
+            max-width: 1200px;
             margin: 0 auto;
-            position: relative;
-            z-index: 1;
-        }
-
-        .step {
             display: grid;
-            grid-template-columns: 100px 1fr;
-            gap: 3rem;
-            margin-bottom: 4rem;
-            align-items: start;
-            opacity: 0;
-            animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            grid-template-columns: 1fr 1fr;
+            gap: 6rem;
+            align-items: center;
         }
 
-        .step:nth-child(1) { animation-delay: 0.2s; }
-        .step:nth-child(2) { animation-delay: 0.4s; }
-        .step:nth-child(3) { animation-delay: 0.6s; }
-        .step:nth-child(4) { animation-delay: 0.8s; }
-
-        .step-number {
-            font-family: 'Manrope', sans-serif;
-            font-size: 4rem;
-            font-weight: 700;
-            color: var(--accent);
-            line-height: 1;
+        .transparency-text h2 {
+            font-size: clamp(2rem, 5vw, 4rem);
+            margin-bottom: 2rem;
             letter-spacing: -0.03em;
         }
 
-        .step-content h3 {
-            font-family: 'Manrope', sans-serif;
-            font-size: 1.8rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
+        .transparency-text .gradient-text {
+            background: linear-gradient(135deg, var(--primary-light) 0%, var(--white) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .transparency-text p {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 2rem;
+        }
+
+        .transparency-features {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .transparency-item {
+            display: flex;
+            align-items: start;
+            gap: 1rem;
+            padding: 1.5rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .transparency-item:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: var(--primary);
+            transform: translateX(8px);
+        }
+
+        .transparency-item-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--primary);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .transparency-item-icon svg {
+            width: 20px;
+            height: 20px;
+            stroke: white;
+            fill: none;
+            stroke-width: 2.5;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .transparency-item-text h4 {
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .transparency-item-text p {
+            font-size: 0.95rem;
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        /* Bias Control Section */
+        .bias-control {
+            padding: 8rem 3rem;
+            background: linear-gradient(180deg, var(--white) 0%, var(--gray-50) 100%);
+        }
+
+        .bias-content {
+            max-width: 1000px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .bias-content h2 {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            margin-bottom: 2rem;
             letter-spacing: -0.02em;
         }
 
-        .step-content p {
-            color: var(--gray-300);
-            line-height: 1.7;
-            font-size: 1.1rem;
+        .bias-content p {
+            font-size: 1.25rem;
+            color: #666;
+            margin-bottom: 4rem;
+            line-height: 1.8;
         }
 
-        /* Control Section */
-        .control-section {
-            padding: 8rem 5%;
-            background: linear-gradient(180deg, var(--white) 0%, var(--gray-100) 100%);
-        }
-
-        .control-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            text-align: center;
-        }
-
-        .control-content h2 {
-            font-family: 'Manrope', sans-serif;
-            font-size: clamp(2.5rem, 5vw, 4.5rem);
-            font-weight: 700;
-            letter-spacing: -0.03em;
-            margin-bottom: 2rem;
-        }
-
-        .control-content p {
-            font-size: 1.3rem;
-            color: var(--gray-700);
-            margin-bottom: 3rem;
-            line-height: 1.7;
-        }
-
-        .bias-options {
+        .bias-selector {
             display: flex;
-            justify-content: center;
             gap: 1rem;
+            justify-content: center;
             flex-wrap: wrap;
-            margin: 3rem 0;
+            margin-bottom: 3rem;
         }
 
-        .bias-pill {
+        .bias-option {
             padding: 1rem 2rem;
+            border-radius: 50px;
             background: var(--white);
             border: 2px solid var(--gray-200);
-            border-radius: 50px;
-            font-family: 'Inter', sans-serif;
             font-weight: 500;
-            font-size: 0.95rem;
-            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
             cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            font-size: 0.95rem;
         }
 
-        .bias-pill:hover {
-            border-color: var(--accent);
-            background: var(--accent);
+        .bias-option:hover {
+            border-color: var(--primary);
             transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(79, 70, 229, 0.15);
+        }
+
+        .bias-option.active {
+            background: var(--primary);
+            color: var(--white);
+            border-color: var(--primary);
+        }
+
+        .bias-description {
+            background: var(--white);
+            border-radius: 24px;
+            padding: 2.5rem;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.05);
+            border: 1px solid var(--gray-200);
+        }
+
+        .bias-description h4 {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+
+        .bias-description p {
+            font-size: 1.05rem;
+            color: #666;
+            margin: 0;
+            line-height: 1.7;
         }
 
         /* CTA Section */
-        .cta-section {
-            padding: 8rem 5%;
-            background: var(--black);
+        .cta {
+            padding: 8rem 3rem;
+            background: var(--primary);
+            color: var(--white);
             text-align: center;
             position: relative;
             overflow: hidden;
         }
 
-        .cta-section::before {
+        .cta::before {
             content: '';
             position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 600px;
-            height: 600px;
-            background: radial-gradient(circle, rgba(220, 255, 78, 0.1) 0%, transparent 70%);
-            animation: pulse 4s ease-in-out infinite;
+            top: 0;
+            left: -50%;
+            width: 200%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+            animation: float 15s ease-in-out infinite;
         }
 
         .cta-content {
+            max-width: 800px;
+            margin: 0 auto;
             position: relative;
             z-index: 1;
-            max-width: 700px;
-            margin: 0 auto;
         }
 
-        .cta-content h2 {
-            font-family: 'Manrope', sans-serif;
-            font-size: clamp(2.5rem, 5vw, 4rem);
-            font-weight: 700;
-            color: var(--white);
+        .cta h2 {
+            font-size: clamp(2.5rem, 6vw, 4.5rem);
+            margin-bottom: 1.5rem;
             letter-spacing: -0.03em;
-            margin-bottom: 2rem;
         }
 
-        .cta-content p {
+        .cta p {
             font-size: 1.3rem;
-            color: var(--gray-300);
             margin-bottom: 3rem;
+            opacity: 0.95;
+            line-height: 1.7;
+        }
+
+        .waitlist-form {
+            display: flex;
+            gap: 1rem;
+            max-width: 600px;
+            margin: 0 auto;
+            flex-wrap: wrap;
+        }
+
+        .waitlist-form input {
+            flex: 1;
+            min-width: 250px;
+            padding: 1.25rem 1.75rem;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50px;
+            font-size: 1rem;
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--white);
+            transition: all 0.3s ease;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .waitlist-form input::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .waitlist-form input:focus {
+            outline: none;
+            border-color: var(--white);
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .waitlist-form button {
+            padding: 1.25rem 3rem;
+            border-radius: 50px;
+            background: var(--white);
+            color: var(--primary);
+            border: none;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            font-family: 'Inter', sans-serif;
+            white-space: nowrap;
+        }
+
+        .waitlist-form button:hover {
+            background: var(--black);
+            color: var(--white);
+            transform: translateY(-4px);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+        }
+
+        .waitlist-success {
+            display: none;
+            background: rgba(255, 255, 255, 0.15);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-top: 2rem;
+        }
+
+        .waitlist-success.show {
+            display: block;
+            animation: fadeInUp 0.5s ease-out;
+        }
+
+        .waitlist-success h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .waitlist-success p {
+            font-size: 1rem;
+            margin: 0;
+            opacity: 0.9;
         }
 
         /* Footer */
         footer {
-            padding: 4rem 5%;
             background: var(--black);
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            text-align: center;
-            color: var(--gray-300);
+            color: var(--white);
+            padding: 4rem 3rem 2rem;
         }
 
-        footer p {
-            font-size: 0.95rem;
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-brand h3 {
+            font-family: 'Manrope', sans-serif;
+            font-size: 1.75rem;
+            margin-bottom: 1rem;
+            font-weight: 800;
+        }
+
+        .footer-brand p {
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.7;
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-section h4 {
+            font-size: 1rem;
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.75rem;
+        }
+
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--primary-light);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 2rem;
+            text-align: center;
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 0.9rem;
         }
 
         /* Responsive */
         @media (max-width: 968px) {
             nav {
-                padding: 1.5rem 5%;
+                padding: 1rem 2rem;
             }
 
-            .phone-mockup {
-                width: 100%;
+            .hero {
+                padding: 6rem 2rem 3rem;
             }
 
-            .hero-content {
+            .features, .transparency, .bias-control, .cta {
+                padding: 5rem 2rem;
+            }
+
+            .transparency-content {
                 grid-template-columns: 1fr;
-                gap: 4rem;
-                text-align: center;
+                gap: 3rem;
             }
 
-            .hero-text h1 {
-                font-size: clamp(2.5rem, 8vw, 4rem);
+            .footer-content {
+                grid-template-columns: 1fr 1fr;
+                gap: 2rem;
             }
 
-            .waitlist-form {
-                margin: 0 auto;
+            .hero-cta-group {
+                flex-direction: column;
             }
 
-            .phone-mockup {
-                max-width: 300px;
+            .btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 640px) {
+            nav {
+                padding: 1rem;
+            }
+
+            .logo {
+                font-size: 1.25rem;
+            }
+
+            .nav-cta {
+                padding: 0.6rem 1.5rem;
+                font-size: 0.875rem;
             }
 
             .features-grid {
                 grid-template-columns: 1fr;
             }
 
-            .step {
-                grid-template-columns: 80px 1fr;
-                gap: 2rem;
+            .footer-content {
+                grid-template-columns: 1fr;
             }
 
-            .step-number {
-                font-size: 3rem;
-            }
-
-            .bias-options {
+            .bias-selector {
                 flex-direction: column;
-                align-items: center;
+                align-items: stretch;
             }
 
-            .bias-pill {
+            .bias-option {
                 width: 100%;
-                max-width: 300px;
+                text-align: center;
             }
+
+            .waitlist-form {
+                flex-direction: column;
+            }
+
+            .waitlist-form input,
+            .waitlist-form button {
+                width: 100%;
+                min-width: auto;
+            }
+        }
+
+        /* Scroll animations */
+        .scroll-fade {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .scroll-fade.visible {
+            opacity: 1;
+            transform: translateY(0);
         }
     </style>
 </head>
 <body>
+    <!-- Navigation -->
     <nav>
-        <div class="logo">Smart Bites</div>
-        <button class="pill-button accent">Join Waitlist</button>
+        <div class="logo">Smart<span>Bites</span></div>
+        <a href="#waitlist" class="nav-cta">Join Waitlist</a>
     </nav>
 
+    <!-- Hero Section -->
     <section class="hero">
         <div class="hero-content">
-            <div class="hero-text">
-                <h1 class="manrope">Calorie tracking that respects your intelligence</h1>
-                <p>AI-powered nutrition analysis with unprecedented control. Take a photo, get instant insights, and customize every detail to your preference.</p>
-                <form action='https://formspree.io/f/meoppnoz' method="POST" class="waitlist-form">
-                    <input type="email" class="email-input" placeholder="Enter your email to join the waitlist" required>
-        <input type="hidden" name='username' value="SMART-BITES WAITLIST" placeholder="Enter your email" class="email-input">
-                    <button type="submit" class="pill-button accent">Join</button>
-                </form>
+            <div class="hero-badge">AI-Powered Nutrition Tracking</div>
+            <h1>
+                Calorie Tracking<br>
+                with <span class="gradient-text">Full Transparency</span>
+            </h1>
+            <p class="hero-subtitle">
+                Take control of your nutrition journey. Smart Bites gives you complete transparency and control over every calorie count, ingredient, and portion.
+            </p>
+            <div class="hero-cta-group">
+                <a href="#waitlist" class="btn btn-primary">
+                    <span>Join the Waitlist</span>
+                    <span>→</span>
+                </a>
+                <a href="#features" class="btn btn-secondary">Learn More</a>
             </div>
-            <div class="hero-visual">
-                <div class="phone-mockup">
-                    <div class="phone-screen">
-                        <div class="screen-glow"></div>
-                        <div class="scan-animation">
-                            <div class="scan-icon"></div>
-                            <div class="scan-text">Analyzing...</div>
-                        </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="features">
+        <div class="section-header scroll-fade">
+            <div class="section-label">Features</div>
+            <h2 class="section-title">Everything You Need, Nothing You Don't</h2>
+            <p class="section-description">
+                Smart Bites combines AI precision with human control for the most accurate and transparent calorie tracking experience.
+            </p>
+        </div>
+
+        <div class="features-grid">
+            <div class="feature-card scroll-fade">
+                <div class="feature-icon">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
+                        <circle cx="12" cy="13" r="4"></circle>
+                    </svg>
+                </div>
+                <h3>Instant AI Recognition</h3>
+                <p>Simply snap a photo of your meal and let our advanced AI analyze every ingredient, portion size, and nutritional value in seconds.</p>
+            </div>
+
+            <div class="feature-card scroll-fade">
+                <div class="feature-icon">
+                    <svg viewBox="0 0 24 24">
+                        <line x1="4" y1="21" x2="4" y2="14"></line>
+                        <line x1="4" y1="10" x2="4" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="12"></line>
+                        <line x1="12" y1="8" x2="12" y2="3"></line>
+                        <line x1="20" y1="21" x2="20" y2="16"></line>
+                        <line x1="20" y1="12" x2="20" y2="3"></line>
+                        <line x1="1" y1="14" x2="7" y2="14"></line>
+                        <line x1="9" y1="8" x2="15" y2="8"></line>
+                        <line x1="17" y1="16" x2="23" y2="16"></line>
+                    </svg>
+                </div>
+                <h3>Bias Control</h3>
+                <p>Choose how the app estimates calories—from conservative underestimates to generous overestimates. You're in complete control of the margin of error.</p>
+            </div>
+
+            <div class="feature-card scroll-fade">
+                <div class="feature-icon">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                        <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                    </svg>
+                </div>
+                <h3>Full Editing Power</h3>
+                <p>Edit ingredients, adjust portions, modify descriptions, or add missing items. Every detail is transparent and customizable to match reality.</p>
+            </div>
+
+            <div class="feature-card scroll-fade">
+                <div class="feature-icon">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
+                    </svg>
+                </div>
+                <h3>Save Custom Meals</h3>
+                <p>Create a library of your regular meals. Log them instantly without repeatedly calculating the same dishes every time.</p>
+            </div>
+
+            <div class="feature-card scroll-fade">
+                <div class="feature-icon">
+                    <svg viewBox="0 0 24 24">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <circle cx="12" cy="12" r="6"></circle>
+                        <circle cx="12" cy="12" r="2"></circle>
+                    </svg>
+                </div>
+                <h3>Precise Macros</h3>
+                <p>Track calories, protein, carbs, and fats with detailed breakdowns. See exactly what you're consuming at every meal.</p>
+            </div>
+
+            <div class="feature-card scroll-fade">
+                <div class="feature-icon">
+                    <svg viewBox="0 0 24 24">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <path d="m21 21-4.35-4.35"></path>
+                    </svg>
+                </div>
+                <h3>Complete Transparency</h3>
+                <p>See the full ingredient list, weights, and calculations behind every number. No black boxes, no hidden estimations.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Transparency Section -->
+    <section class="transparency">
+        <div class="transparency-content">
+            <div class="transparency-text scroll-fade">
+                <h2>
+                    Built on <span class="gradient-text">Transparency</span>,<br>
+                    Powered by Control
+                </h2>
+                <p>
+                    Unlike other calorie trackers that give you a number and hope for the best, Smart Bites shows you exactly how we arrived at every calculation. Edit, adjust, and perfect your logs until they're exactly right.
+                </p>
+            </div>
+
+            <div class="transparency-features">
+                <div class="transparency-item scroll-fade">
+                    <div class="transparency-item-icon">
+                        <svg viewBox="0 0 24 24">
+                            <polyline points="20 6 9 17 4 12"></polyline>
+                        </svg>
+                    </div>
+                    <div class="transparency-item-text">
+                        <h4>Detailed Ingredient Lists</h4>
+                        <p>See every component of your meal broken down with weights and nutritional data</p>
+                    </div>
+                </div>
+
+                <div class="transparency-item scroll-fade">
+                    <div class="transparency-item-icon">
+                        <svg viewBox="0 0 24 24">
+                            <polyline points="20 6 9 17 4 12"></polyline>
+                        </svg>
+                    </div>
+                    <div class="transparency-item-text">
+                        <h4>Editable Everything</h4>
+                        <p>Delete, add, or modify any ingredient or portion to reflect what you actually ate</p>
+                    </div>
+                </div>
+
+                <div class="transparency-item scroll-fade">
+                    <div class="transparency-item-icon">
+                        <svg viewBox="0 0 24 24">
+                            <polyline points="20 6 9 17 4 12"></polyline>
+                        </svg>
+                    </div>
+                    <div class="transparency-item-text">
+                        <h4>Real-Time Recalculation</h4>
+                        <p>Watch the macros update instantly as you make changes to your meal</p>
+                    </div>
+                </div>
+
+                <div class="transparency-item scroll-fade">
+                    <div class="transparency-item-icon">
+                        <svg viewBox="0 0 24 24">
+                            <polyline points="20 6 9 17 4 12"></polyline>
+                        </svg>
+                    </div>
+                    <div class="transparency-item-text">
+                        <h4>Your Data, Your Way</h4>
+                        <p>Export, analyze, and use your nutrition data however you need</p>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <section class="features">
-        <div class="section-header">
-            <h2 class="manrope">Built for precision, designed for you</h2>
-            <p>Smart Bites doesn't just count calories, it gives you complete transparency and control over your nutrition tracking.</p>
-        </div>
-        <div class="features-grid">
-            <div class="feature-card">
-                <div class="feature-icon">📸</div>
-                <h3>Instant AI Analysis</h3>
-                <p>Simply photograph your meal. Our AI identifies ingredients, estimates portions, and calculates macros in seconds.</p>
+    <!-- Bias Control Section -->
+    <section class="bias-control">
+        <div class="bias-content scroll-fade">
+            <h2>Control the Estimation</h2>
+            <p>
+                We know AI estimations aren't perfect. That's why Smart Bites lets you decide how conservative or generous the app should be with calorie calculations.
+            </p>
+
+            <div class="bias-selector">
+                <div class="bias-option" data-bias="underestimate-more">Underestimate More</div>
+                <div class="bias-option" data-bias="underestimate">Underestimate</div>
+                <div class="bias-option active" data-bias="normal">Normal</div>
+                <div class="bias-option" data-bias="overestimate">Overestimate</div>
+                <div class="bias-option" data-bias="overestimate-more">Overestimate More</div>
             </div>
-            <div class="feature-card">
-                <div class="feature-icon">⚖️</div>
-                <h3>Choose Your Bias</h3>
-                <p>AI estimations aren't perfect. You decide whether the app underestimates or overestimates, putting you in control of the margin of error.</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">✏️</div>
-                <h3>Full Editing Control</h3>
-                <p>Review ingredients, adjust portions, add or remove items, and watch the AI recalculate everything in real-time.</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">💾</div>
-                <h3>Save Your Meals</h3>
-                <p>Create a library of your frequent meals. Track your favorites instantly without re-scanning every time.</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">🎯</div>
-                <h3>Complete Transparency</h3>
-                <p>See the breakdown of every ingredient with weights, calories, carbs, protein, and fats, all clearly displayed.</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">🔬</div>
-                <h3>Precision Nutrition</h3>
-                <p>Whether you're cutting, bulking, or maintaining, Smart Bites adapts to your nutritional goals with surgical precision.</p>
+
+            <div class="bias-description">
+                <h4>Normal Estimation</h4>
+                <p>Balanced calculations based on standard portion sizes and typical ingredients. Best for general tracking and most users.</p>
             </div>
         </div>
     </section>
 
-    <section class="how-it-works">
-        <div class="section-header">
-            <h2 class="manrope">How it works</h2>
-            <p>Four simple steps to complete nutritional awareness</p>
-        </div>
-        <div class="steps">
-            <div class="step">
-                <div class="step-number">01</div>
-                <div class="step-content">
-                    <h3>Set Your Preference</h3>
-                    <p>During onboarding, choose your estimation bias. From "Underestimate More" to "Overestimate More," you're in control of how the AI rounds its calculations.</p>
-                </div>
-            </div>
-            <div class="step">
-                <div class="step-number">02</div>
-                <div class="step-content">
-                    <h3>Capture Your Meal</h3>
-                    <p>Take a photo of your food. Our AI instantly recognizes ingredients, estimates portion sizes, and provides a detailed breakdown.</p>
-                </div>
-            </div>
-            <div class="step">
-                <div class="step-number">03</div>
-                <div class="step-content">
-                    <h3>Refine the Details</h3>
-                    <p>Review and edit everything. Adjust weights, add missing ingredients, remove incorrect items, or change the description. The AI recalculates automatically.</p>
-                </div>
-            </div>
-            <div class="step">
-                <div class="step-number">04</div>
-                <div class="step-content">
-                    <h3>Track & Save</h3>
-                    <p>View your complete nutritional data. Save frequent meals to your library for instant tracking next time.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="control-section">
-        <div class="control-content">
-            <h2 class="manrope">You control the estimation</h2>
-            <p>Choose how conservative or aggressive you want the AI to be with its calorie calculations. Perfect for different goals and preferences.</p>
-            <div class="bias-options">
-                <div class="bias-pill">Underestimate More</div>
-                <div class="bias-pill">Underestimate</div>
-                <div class="bias-pill">Normal</div>
-                <div class="bias-pill">Overestimate</div>
-                <div class="bias-pill">Overestimate More</div>
-            </div>
-        </div>
-    </section>
-
-    <section class="cta-section">
+    <!-- CTA Section -->
+    <section id="waitlist" class="cta">
         <div class="cta-content">
-            <h2 class="manrope">Ready to take control?</h2>
-            <p>Join the waitlist and be among the first to experience the future of intelligent calorie tracking.</p>
-            <form id="form2" action='https://formspree.io/f/meoppnoz' method="POST" class="waitlist-form" style="margin: 0 auto;" >
-        <input type="hidden" name='username' value="SMART-BITES WAITLIST" placeholder="Enter your email" class="email-input">
-                <input type="email" class="email-input" placeholder="Enter your email" required>
-                <button type="submit" class="pill-button accent">Join</button>
+            <h2>Join the Waitlist</h2>
+            <p>Be the first to experience calorie tracking with complete transparency and control. Get early access when we launch.</p>
+            
+            <form action='https://formspree.io/f/meoppnoz' method="POST" class="waitlist-form" id="waitlistForm">
+                <input 
+                    type="email" 
+                    id="emailInput"
+                    placeholder="Enter your email address" 
+                    required
+                    pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+                >
+        <input type="hidden" name='username' value="SMARTBITES WAITLIST" placeholder="Enter your email" class="email-input">
+                <button type="submit">Join Waitlist</button>
             </form>
+
+            <div class="waitlist-success" id="successMessage">
+                <h3>🎉 You're on the list!</h3>
+                <p>We'll notify you as soon as Smart Bites launches. Get ready for transparent calorie tracking.</p>
+            </div>
         </div>
     </section>
 
+    <!-- Footer -->
     <footer>
-        <p>&copy; 2026 Smart Bites. All rights reserved.</p>
+        <div class="footer-content">
+            <div class="footer-brand">
+                <h3>SmartBites</h3>
+                <p>The most transparent and controllable calorie tracking app. Take full control of your nutrition journey.</p>
+            </div>
+
+            <!-- <div class="footer-section">
+                <h4>Product</h4>
+                <ul class="footer-links">
+                    <li><a href="#features">Features</a></li>
+                    <li><a href="#waitlist">Join Waitlist</a></li>
+                    <li><a href="#">Premium</a></li>
+                    <li><a href="#">Roadmap</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h4>Company</h4>
+                <ul class="footer-links">
+                    <li><a href="#">About</a></li>
+                    <li><a href="#">Blog</a></li>
+                    <li><a href="#">Careers</a></li>
+                    <li><a href="#">Press</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h4>Support</h4>
+                <ul class="footer-links">
+                    <li><a href="#">Help Center</a></li>
+                    <li><a href="#">Contact</a></li>
+                    <li><a href="#">Privacy</a></li>
+                    <li><a href="#">Terms</a></li>
+                </ul>
+            </div> -->
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2026 SmartBites. All rights reserved.</p>
+        </div>
     </footer>
 
-<script>
-  const form = document.querySelector("form");
-
-  const form2 = document.getElementById('form2')
-
-  form.addEventListener("submit", async (e) => {
-    e.preventDefault();
-    const data = new FormData(form);
-
-    const response = await fetch(form.action, {
-      method: form.method,
-      body: data,
-      headers: { 'Accept': 'application/json' }
-    });
-
-    if (response.ok) {
-      alert("Thank you for joining the waitlist!");
-      form.reset();
-    } else {
-      alert("Oops! Something went wrong.");
-    }
-  });
-
-
-  form2.addEventListener("submit", async (e) => {
-    e.preventDefault();
-    const data = new FormData(form);
-
-    const response = await fetch(form.action, {
-      method: form.method,
-      body: data,
-      headers: { 'Accept': 'application/json' }
-    });
-
-    if (response.ok) {
-      alert("Thank you for joining the waitlist!");
-      form.reset();
-    } else {
-      alert("Oops! Something went wrong.");
-    }
-  });
-</script>
-
     <script>
-        function handleSubmit(event) {
-            event.preventDefault();
-            const email = event.target.querySelector('input[type="email"]').value;
-            alert(`Thank you! We'll contact you at ${email} when Smart Bites launches.`);
-            event.target.reset();
-        }
+        // Waitlist form handling
+        const waitlistForm = document.getElementById('waitlistForm');
+        const emailInput = document.getElementById('emailInput');
+        const successMessage = document.getElementById('successMessage');
 
-        // Smooth scroll for nav button
-        document.querySelectorAll('nav .pill-button').forEach(button => {
-            button.addEventListener('click', () => {
-                document.querySelector('.cta-section').scrollIntoView({ 
-                    behavior: 'smooth' 
-                });
+        waitlistForm.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const data = new FormData(waitlistForm);
+
+    const response = await fetch(waitlistForm.action, {
+      method: waitlistForm.method,
+      body: data,
+      headers: { 'Accept': 'application/json' }
+    });
+            
+            const email = emailInput.value;
+            
+            // Here you would typically send the email to your backend
+            // For now, we'll just show the success message
+            console.log('Waitlist signup:', email);
+            
+            // Hide form and show success message
+            waitlistForm.style.display = 'none';
+            successMessage.classList.add('show');
+        
+        });
+
+        // Bias selector interactivity
+        const biasOptions = document.querySelectorAll('.bias-option');
+        const biasDescription = document.querySelector('.bias-description');
+
+        const descriptions = {
+            'underestimate-more': {
+                title: 'Underestimate More',
+                text: 'Conservative estimates with lower calorie counts. Best for users who tend to eat more than logged or want extra buffer room in their diet.'
+            },
+            'underestimate': {
+                title: 'Underestimate',
+                text: 'Slightly conservative calculations with a small downward bias. Good for those who want a safety margin but still want reasonable accuracy.'
+            },
+            'normal': {
+                title: 'Normal Estimation',
+                text: 'Balanced calculations based on standard portion sizes and typical ingredients. Best for general tracking and most users.'
+            },
+            'overestimate': {
+                title: 'Overestimate',
+                text: 'Slightly generous calculations with an upward bias. Ideal for those trying to be extra cautious about intake or in a calorie deficit.'
+            },
+            'overestimate-more': {
+                title: 'Overestimate More',
+                text: 'Conservative upper-bound estimates with higher calorie counts. Perfect for users who want maximum caution or are cutting weight aggressively.'
+            }
+        };
+
+        biasOptions.forEach(option => {
+            option.addEventListener('click', () => {
+                biasOptions.forEach(opt => opt.classList.remove('active'));
+                option.classList.add('active');
+
+                const bias = option.getAttribute('data-bias');
+                const desc = descriptions[bias];
+
+                biasDescription.querySelector('h4').textContent = desc.title;
+                biasDescription.querySelector('p').textContent = desc.text;
             });
         });
 
-        // Intersection Observer for animations
+        // Scroll animations
         const observerOptions = {
             threshold: 0.1,
             rootMargin: '0px 0px -100px 0px'
@@ -801,17 +1133,27 @@
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0)';
+                    entry.target.classList.add('visible');
                 }
             });
         }, observerOptions);
 
-        document.querySelectorAll('.feature-card').forEach(card => {
-            card.style.opacity = '0';
-            card.style.transform = 'translateY(30px)';
-            card.style.transition = 'all 0.8s cubic-bezier(0.16, 1, 0.3, 1)';
-            observer.observe(card);
+        document.querySelectorAll('.scroll-fade').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
         });
     </script>
 </body>
