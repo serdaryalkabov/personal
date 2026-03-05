@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Launchpad — Content Engine for Solopreneurs</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --teal:        #196175;
+      --teal-light:  #1E7A91;
+      --teal-dim:    rgba(25,97,117,0.08);
+      --bg:          #080D10;
+      --bg2:         #0C1417;
+      --bg3:         #101C20;
+      --border:      rgba(255,255,255,0.07);
+      --border-teal: rgba(25,97,117,0.35);
+      --text:        #F0F4F5;
+      --muted:       #6B8A92;
+      --muted2:      #3D5A62;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      font-weight: 300;
+      overflow-x: hidden;
+    }
+
+    /* Grid background */
+    body::after {
+      content: '';
+      position: fixed; inset: 0;
+      background-image:
+        linear-gradient(rgba(25,97,117,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(25,97,117,0.04) 1px, transparent 1px);
+      background-size: 48px 48px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 22px 56px;
+      border-bottom: 1px solid transparent;
+      transition: border-color .3s, background .3s, backdrop-filter .3s;
+    }
+    nav.scrolled {
+      border-color: var(--border);
+      background: rgba(8,13,16,0.88);
+      backdrop-filter: blur(16px);
+    }
+    .logo {
+      font-family: 'Manrope', sans-serif; font-size: 20px; font-weight: 700;
+      color: var(--text); text-decoration: none; letter-spacing: -0.5px;
+    }
+    .logo span { color: var(--teal-light); }
+    .nav-badge {
+      font-family: 'Manrope', sans-serif; font-size: 11px; font-weight: 600;
+      letter-spacing: 0.1em; text-transform: uppercase; color: var(--teal-light);
+      border: 1px solid var(--border-teal); padding: 5px 12px;
+      border-radius: 100px; background: var(--teal-dim);
+    }
+
+    /* HERO */
+    .hero {
+      position: relative; min-height: 100vh;
+      display: flex; align-items: center;
+      padding: 140px 56px 100px; overflow: hidden; z-index: 1;
+    }
+    .hero::before {
+      content: ''; position: absolute; top: -20%; left: 50%;
+      transform: translateX(-50%); width: 900px; height: 600px;
+      background: radial-gradient(ellipse at center, rgba(25,97,117,0.22) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero-inner { max-width: 680px; position: relative; }
+
+    .hero-tag {
+      display: inline-flex; align-items: center; gap: 8px;
+      border: 1px solid var(--border-teal); background: var(--teal-dim);
+      border-radius: 100px; padding: 6px 14px 6px 8px; margin-bottom: 36px;
+      opacity: 0; animation: fadeUp .7s .1s forwards;
+    }
+    .tag-dot {
+      width: 6px; height: 6px; background: var(--teal-light);
+      border-radius: 50%; animation: pulse 2s infinite;
+    }
+    @keyframes pulse { 0%,100%{ opacity:1; transform:scale(1); } 50%{ opacity:.5; transform:scale(1.5); } }
+    .tag-text {
+      font-family: 'Manrope', sans-serif; font-size: 12px; font-weight: 600;
+      color: var(--teal-light); letter-spacing: 0.04em;
+    }
+
+    h1 {
+      font-family: 'Manrope', sans-serif;
+      font-size: clamp(48px, 6.5vw, 84px); font-weight: 800;
+      line-height: 1.0; letter-spacing: -3px; color: var(--text); margin-bottom: 28px;
+      opacity: 0; animation: fadeUp .7s .25s forwards;
+    }
+    h1 .accent { color: var(--teal-light); }
+
+    .hero-sub {
+      font-size: 18px; font-weight: 300; line-height: 1.7;
+      color: var(--muted); max-width: 520px; margin-bottom: 52px;
+      opacity: 0; animation: fadeUp .7s .4s forwards;
+    }
+
+    /* FORM */
+    .form-wrap { opacity: 0; animation: fadeUp .7s .55s forwards; }
+
+    .formspree-form { display: flex; flex-direction: column; gap: 0; max-width: 460px; }
+    .form-row {
+      display: flex; max-width: 460px;
+      border: 1px solid var(--border-teal); background: rgba(25,97,117,0.06);
+      border-radius: 10px; overflow: hidden;
+      transition: border-color .2s, box-shadow .2s;
+    }
+    .form-row:focus-within {
+      border-color: var(--teal-light);
+      box-shadow: 0 0 0 3px rgba(25,97,117,0.15);
+    }
+    .form-row input {
+      flex: 1; padding: 15px 20px;
+      background: transparent; border: none;
+      font-family: 'Inter', sans-serif; font-size: 14px;
+      color: var(--text); outline: none;
+    }
+    .form-row input::placeholder { color: var(--muted2); }
+    .form-row button {
+      padding: 15px 24px; background: var(--teal); color: #fff; border: none;
+      font-family: 'Manrope', sans-serif; font-size: 13px; font-weight: 700;
+      letter-spacing: 0.02em; white-space: nowrap; cursor: pointer;
+      transition: background .2s;
+    }
+    .form-row button:hover { background: var(--teal-light); }
+    .form-note { margin-top: 12px; font-size: 12px; color: var(--muted2); }
+
+    .success-msg {
+      display: none; align-items: center; gap: 10px;
+      padding: 14px 18px; background: var(--teal-dim);
+      border: 1px solid var(--border-teal); border-radius: 8px; max-width: 460px;
+    }
+    .success-msg.show { display: flex; }
+    .success-icon { color: var(--teal-light); display: flex; }
+
+    /* HERO CARDS */
+    .hero-cards {
+      position: absolute; right: 56px; top: 50%; transform: translateY(-50%);
+      display: flex; flex-direction: column; gap: 14px; width: 300px;
+      opacity: 0; animation: fadeUp .8s .7s forwards;
+    }
+    .hcard {
+      background: var(--bg2); border: 1px solid var(--border);
+      border-radius: 12px; padding: 18px 20px; position: relative;
+      transition: border-color .3s;
+    }
+    .hcard:hover { border-color: var(--border-teal); }
+    .hcard:nth-child(2) { margin-left: 24px; border-color: var(--border-teal); background: var(--bg3); }
+    .hcard:nth-child(3) { margin-left: 12px; }
+    .hcard-plat {
+      font-family: 'Manrope', sans-serif; font-size: 10px; font-weight: 700;
+      letter-spacing: 0.12em; text-transform: uppercase; color: var(--teal-light); margin-bottom: 10px;
+      display: flex; align-items: center; gap: 6px;
+    }
+    .hcard-text { font-size: 12.5px; line-height: 1.6; color: var(--muted); }
+    .hcard-foot {
+      margin-top: 12px; display: flex; justify-content: space-between;
+      font-size: 10px; color: var(--muted2);
+    }
+    .hcard-pill {
+      position: absolute; top: -9px; right: 14px;
+      background: var(--teal); color: #fff;
+      font-family: 'Manrope', sans-serif; font-size: 9px; font-weight: 700;
+      padding: 3px 9px; border-radius: 100px; letter-spacing: 0.06em;
+    }
+
+    /* STATS */
+    .stats {
+      position: relative; z-index: 1;
+      display: grid; grid-template-columns: repeat(3,1fr);
+      border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+    }
+    .stat { padding: 52px 56px; border-right: 1px solid var(--border); }
+    .stat:last-child { border-right: none; }
+    .stat-num {
+      font-family: 'Manrope', sans-serif; font-size: 52px; font-weight: 800;
+      letter-spacing: -2px; color: var(--text); line-height: 1; margin-bottom: 8px;
+    }
+    .stat-num span { color: var(--teal-light); }
+    .stat-label { font-size: 13px; color: var(--muted); line-height: 1.6; }
+
+    /* SECTIONS */
+    .section { position: relative; z-index: 1; padding: 100px 56px; }
+    .section-eyebrow { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; }
+    .eyebrow-line { width: 24px; height: 1px; background: var(--teal); }
+    .eyebrow-label {
+      font-family: 'Manrope', sans-serif; font-size: 11px; font-weight: 700;
+      letter-spacing: 0.14em; text-transform: uppercase; color: var(--teal-light);
+    }
+    h2 {
+      font-family: 'Manrope', sans-serif;
+      font-size: clamp(32px,4vw,48px); font-weight: 800;
+      letter-spacing: -1.5px; line-height: 1.1; color: var(--text); margin-bottom: 56px;
+    }
+    h2 .accent { color: var(--teal-light); }
+
+    /* STEPS */
+    .steps {
+      display: grid; grid-template-columns: repeat(3,1fr);
+      gap: 1px; background: var(--border);
+      border: 1px solid var(--border); border-radius: 16px; overflow: hidden;
+    }
+    .step { background: var(--bg); padding: 44px 36px; transition: background .3s; }
+    .step:hover { background: var(--bg2); }
+    .step-idx {
+      font-family: 'Manrope', sans-serif; font-size: 11px; font-weight: 700;
+      letter-spacing: 0.1em; color: var(--teal); margin-bottom: 20px;
+    }
+    .step-icon {
+      width: 40px; height: 40px;
+      border: 1px solid var(--border-teal); border-radius: 10px;
+      background: var(--teal-dim); display: flex; align-items: center;
+      justify-content: center; margin-bottom: 20px;
+    }
+    .step-icon svg { width: 20px; height: 20px; stroke: var(--teal-light); fill: none; stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round; }
+    .step-title {
+      font-family: 'Manrope', sans-serif; font-size: 18px; font-weight: 700;
+      color: var(--text); margin-bottom: 12px; letter-spacing: -0.3px;
+    }
+    .step-desc { font-size: 14px; color: var(--muted); line-height: 1.7; }
+    .step-time {
+      margin-top: 20px; font-family: 'Manrope', sans-serif; font-size: 11px;
+      font-weight: 600; color: var(--teal-light); letter-spacing: 0.04em;
+      display: flex; align-items: center; gap: 6px;
+    }
+    .step-time svg { width: 13px; height: 13px; stroke: var(--teal-light); fill: none; stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round; flex-shrink: 0; }
+
+    /* PLATFORMS */
+    .platforms { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; }
+    .platform-card {
+      background: var(--bg2); border: 1px solid var(--border); border-radius: 16px;
+      padding: 36px 32px; transition: border-color .3s, background .3s, transform .3s;
+    }
+    .platform-card:hover { border-color: var(--border-teal); background: var(--bg3); transform: translateY(-4px); }
+    .platform-icon-wrap {
+      width: 44px; height: 44px; background: var(--teal-dim);
+      border: 1px solid var(--border-teal); border-radius: 12px;
+      display: flex; align-items: center; justify-content: center; margin-bottom: 20px;
+    }
+    .platform-icon-wrap svg { width: 22px; height: 22px; fill: var(--teal-light); }
+    .platform-name {
+      font-family: 'Manrope', sans-serif; font-size: 17px; font-weight: 700;
+      color: var(--text); margin-bottom: 10px; letter-spacing: -0.3px;
+    }
+    .platform-desc { font-size: 13.5px; color: var(--muted); line-height: 1.7; margin-bottom: 20px; }
+    .platform-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+    .ptag {
+      font-family: 'Manrope', sans-serif; font-size: 10px; font-weight: 600;
+      letter-spacing: 0.06em; padding: 4px 10px; border-radius: 100px;
+      border: 1px solid var(--border-teal); color: var(--teal-light); background: var(--teal-dim);
+    }
+
+    /* CTA BANNER */
+    .cta-banner {
+      position: relative; z-index: 1;
+      margin: 0 56px 100px;
+      border: 1px solid var(--border-teal); border-radius: 20px;
+      background: linear-gradient(135deg, rgba(25,97,117,0.12) 0%, transparent 60%);
+      padding: 72px;
+      display: flex; align-items: center; justify-content: space-between; gap: 48px;
+      overflow: hidden;
+    }
+    .cta-banner::before {
+      content: ''; position: absolute; right: -100px; top: -100px;
+      width: 400px; height: 400px;
+      background: radial-gradient(circle, rgba(25,97,117,0.15) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .cta-left h2 { margin-bottom: 12px; font-size: clamp(28px,3vw,40px); }
+    .cta-left p { font-size: 15px; color: var(--muted); max-width: 380px; line-height: 1.6; }
+    .cta-right { flex-shrink: 0; min-width: 360px; }
+    .cta-right .form-row { max-width: 100%; }
+
+    /* FOOTER */
+    footer {
+      position: relative; z-index: 1;
+      border-top: 1px solid var(--border); padding: 28px 56px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .footer-note { font-size: 12px; color: var(--muted2); }
+
+    /* 3D OBJECT */
+    .hero-title-row {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      margin-bottom: 28px;
+      opacity: 0;
+      animation: fadeUp .7s .25s forwards;
+    }
+    #hero3d {
+      width: 160px;
+      height: 160px;
+      flex-shrink: 0;
+      margin-left: -16px;
+      margin-top: -8px;
+    }
+    h1 { margin-bottom: 0; opacity: 1; animation: none; }
+
+    @keyframes fadeUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+    .reveal { opacity:0; transform:translateY(24px); transition:opacity .7s,transform .7s; }
+    .reveal.visible { opacity:1; transform:none; }
+
+    @media(max-width:1100px){ .hero-cards{display:none;} }
+    @media(max-width:768px){
+      nav{padding:18px 24px;}
+      .hero{padding:120px 24px 80px;}
+      .stats{grid-template-columns:1fr;}
+      .stat{border-right:none;border-bottom:1px solid var(--border);padding:40px 24px;}
+      .section{padding:64px 24px;}
+      .steps,.platforms{grid-template-columns:1fr;}
+      .cta-banner{flex-direction:column;margin:0 24px 64px;padding:48px 32px;}
+      .cta-right{min-width:0;width:100%;}
+      footer{flex-direction:column;gap:12px;padding:24px;text-align:center;}
+    }
+  </style>
+</head>
+<body>
+
+  <nav id="nav">
+    <a href="#" class="logo">Launch<span>pad</span></a>
+    <span class="nav-badge">Early Access</span>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-inner">
+      <div class="hero-tag">
+        <div class="tag-dot"></div>
+        <span class="tag-text">Built for developer solopreneurs</span>
+      </div>
+      <div class="hero-title-row">
+        <h1>Your product<br>deserves to be<br><span class="accent">seen.</span></h1>
+        <canvas id="hero3d"></canvas>
+      </div>
+      <p class="hero-sub">Launchpad turns your product knowledge into a full week of platform-ready content — Twitter/X, Instagram, LinkedIn — in under 10 minutes. No prompting. No guessing. Just post.</p>
+
+      <div class="form-wrap">
+        <form class="formspree-form" action="https://formspree.io/f/xqeyzyry" method="POST" id="heroForm">
+          <div class="form-row">
+            <input type="email" name="email" placeholder="Enter your email address" required />
+            <button type="submit">Get Early Access →</button>
+          </div>
+        </form>
+        <div class="success-msg" id="heroSuccess">
+          <span class="success-icon">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          </span>
+          <span style="font-size:13px;color:var(--text)">You're on the list — we'll be in touch.</span>
+        </div>
+        <p class="form-note">Free to join. No credit card required.</p>
+      </div>
+    </div>
+
+    <!-- Floating cards -->
+    <div class="hero-cards">
+      <div class="hcard">
+        <div class="hcard-plat">
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="var(--teal-light)"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.737-8.835L1.254 2.25H8.08l4.253 5.622 5.91-5.622Zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+          Twitter / X
+        </div>
+        <div class="hcard-text">Spent 3 months building. 3 days marketing. The ratio was wrong. Fixed it.</div>
+        <div class="hcard-foot"><span>YourApp · Value post</span><span>218 chars</span></div>
+      </div>
+      <div class="hcard">
+        <div class="hcard-pill">Featured</div>
+        <div class="hcard-plat">
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="var(--teal-light)"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+          LinkedIn
+        </div>
+        <div class="hcard-text">The hardest part of building solo isn't the code. It's staying visible while you build. Here's the system I use.</div>
+        <div class="hcard-foot"><span>Story post · Week 2</span><span>Ready</span></div>
+      </div>
+      <div class="hcard">
+        <div class="hcard-plat">
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="var(--teal-light)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+          Instagram
+        </div>
+        <div class="hcard-text">Nobody finds your product if you don't talk about it. Here's how I changed that ↓</div>
+        <div class="hcard-foot"><span>Hook post · Day 4</span><span>141 chars</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATS -->
+  <div class="stats">
+    <div class="stat reveal">
+      <div class="stat-num">10<span>min</span></div>
+      <div class="stat-label">From login to a full week<br>of scheduled content</div>
+    </div>
+    <div class="stat reveal">
+      <div class="stat-num">3<span>×</span></div>
+      <div class="stat-label">Platforms covered in<br>a single generation</div>
+    </div>
+    <div class="stat reveal">
+      <div class="stat-num">0<span>hrs</span></div>
+      <div class="stat-label">Repeated setup after<br>your first product brief</div>
+    </div>
+  </div>
+
+  <!-- HOW IT WORKS -->
+  <section class="section">
+    <div class="section-eyebrow reveal"><div class="eyebrow-line"></div><span class="eyebrow-label">How it works</span></div>
+    <h2 class="reveal">Three steps.<br><span class="accent">Ten minutes.</span></h2>
+    <div class="steps">
+      <div class="step reveal">
+        <div class="step-idx">STEP 01</div>
+        <div class="step-icon">
+          <!-- Clipboard / document icon -->
+          <svg viewBox="0 0 24 24"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/><line x1="9" y1="12" x2="15" y2="12"/><line x1="9" y1="16" x2="13" y2="16"/></svg>
+        </div>
+        <div class="step-title">Tell us your product</div>
+        <div class="step-desc">Fill in your product brief once — name, audience, origin story, tone. This becomes your permanent content DNA. You never repeat yourself.</div>
+        <div class="step-time">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          ~15 minutes, one time only
+        </div>
+      </div>
+      <div class="step reveal">
+        <div class="step-idx">STEP 02</div>
+        <div class="step-icon">
+          <!-- Zap / lightning icon -->
+          <svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+        </div>
+        <div class="step-title">Generate a full week</div>
+        <div class="step-desc">One click. A complete batch of platform-native posts — right format, tone, length, and structure for each channel. No prompting required.</div>
+        <div class="step-time">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          ~30 seconds per batch
+        </div>
+      </div>
+      <div class="step reveal">
+        <div class="step-idx">STEP 03</div>
+        <div class="step-icon">
+          <!-- Send / rocket icon -->
+          <svg viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+        </div>
+        <div class="step-title">Review & schedule</div>
+        <div class="step-desc">Scan, approve, tweak, or regenerate any post with a click. Schedule directly to your connected platforms. Done for the week.</div>
+        <div class="step-time">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          ~8 minutes per week
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PLATFORMS -->
+  <section class="section" style="border-top:1px solid var(--border);padding-top:80px;">
+    <div class="section-eyebrow reveal"><div class="eyebrow-line"></div><span class="eyebrow-label">Platform coverage</span></div>
+    <h2 class="reveal">Content built for<br><span class="accent">every channel.</span></h2>
+    <div class="platforms">
+      <div class="platform-card reveal">
+        <div class="platform-icon-wrap">
+          <!-- X / Twitter logo -->
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.737-8.835L1.254 2.25H8.08l4.253 5.622 5.91-5.622Zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+        </div>
+        <div class="platform-name">Twitter / X</div>
+        <div class="platform-desc">Hook-first tweets and threads optimized for engagement. No hashtag stuffing — sharp, shareable content within character limits.</div>
+        <div class="platform-tags"><span class="ptag">Threads</span><span class="ptag">Takes</span><span class="ptag">Feature drops</span><span class="ptag">Insights</span></div>
+      </div>
+      <div class="platform-card reveal">
+        <div class="platform-icon-wrap">
+          <!-- Instagram logo with gradient -->
+          <svg viewBox="0 0 24 24" width="22" height="22" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="ig-grad" x1="0%" y1="100%" x2="100%" y2="0%">
+                <stop offset="0%" style="stop-color:#1E7A91"/>
+                <stop offset="100%" style="stop-color:#5BB8CC"/>
+              </linearGradient>
+            </defs>
+            <rect x="2" y="2" width="20" height="20" rx="6" fill="none" stroke="url(#ig-grad)" stroke-width="1.8"/>
+            <circle cx="12" cy="12" r="4.2" fill="none" stroke="url(#ig-grad)" stroke-width="1.8"/>
+            <circle cx="17.3" cy="6.7" r="1.1" fill="url(#ig-grad)"/>
+          </svg>
+        </div>
+        <div class="platform-name">Instagram</div>
+        <div class="platform-desc">Caption-first content with a hook before the fold, value in the body, and a clear CTA at the close. Visual direction included.</div>
+        <div class="platform-tags"><span class="ptag">Hooks</span><span class="ptag">Carousels</span><span class="ptag">BTS</span></div>
+      </div>
+      <div class="platform-card reveal">
+        <div class="platform-icon-wrap">
+          <!-- LinkedIn logo -->
+          <svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+        </div>
+        <div class="platform-name">LinkedIn</div>
+        <div class="platform-desc">Founder narratives, milestones, and lessons learned. Long-form authority content that reaches the right decision makers.</div>
+        <div class="platform-tags"><span class="ptag">Storytelling</span><span class="ptag">Milestones</span><span class="ptag">Leadership</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA BANNER -->
+  <div class="cta-banner reveal">
+    <div class="cta-left">
+      <h2>Start building<br><span class="accent">your audience.</span></h2>
+      <p>Join solopreneurs who are done letting great products go unnoticed. Get early access before we launch.</p>
+    </div>
+    <div class="cta-right">
+      <form action="https://formspree.io/f/xqeyzyry" method="POST" id="ctaForm">
+        <div class="form-row">
+          <input type="email" name="email" placeholder="your@email.com" required />
+          <button type="submit">Join Waitlist →</button>
+        </div>
+      </form>
+      <div class="success-msg" id="ctaSuccess">
+        <span class="success-icon">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+        </span>
+        <span style="font-size:13px;color:var(--text)">You're on the list — we'll be in touch soon.</span>
+      </div>
+      <p class="form-note" style="margin-top:10px;">No spam. No credit card. Just early access.</p>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <a href="#" class="logo">Launch<span>pad</span></a>
+    <span class="footer-note">© 2025 Launchpad · Built by a solopreneur, for solopreneurs</span>
+  </footer>
+
+  <script>
+    // Nav scroll effect
+    window.addEventListener('scroll', () =>
+      document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 40)
+    );
+
+    // Scroll reveal
+    const obs = new IntersectionObserver(entries =>
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); }}),
+      { threshold: 0.12 }
+    );
+    document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+    // Formspree AJAX submit
+    async function handleForm(formId, successId) {
+      const form = document.getElementById(formId);
+      form.addEventListener('submit', async e => {
+        e.preventDefault();
+        const data = new FormData(form);
+        try {
+          const res = await fetch(form.action, {
+            method: 'POST', body: data,
+            headers: { 'Accept': 'application/json' }
+          });
+          if (res.ok) {
+            form.style.display = 'none';
+            document.getElementById(successId).classList.add('show');
+          }
+        } catch(err) { form.submit(); }
+      });
+    }
+
+    handleForm('heroForm', 'heroSuccess');
+    handleForm('ctaForm', 'ctaSuccess');
+
+    // Three.js 3D Object
+    (function() {
+      const canvas = document.getElementById('hero3d');
+      const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+      renderer.setPixelRatio(window.devicePixelRatio);
+      renderer.setSize(160, 160);
+
+      const scene = new THREE.Scene();
+      const camera = new THREE.PerspectiveCamera(45, 1, 0.1, 100);
+      camera.position.set(0, 0, 4.5);
+
+      // Icosahedron with wireframe overlay
+      const geo = new THREE.IcosahedronGeometry(1.35, 1);
+
+      // Solid mesh — teal glass-like material
+      const mat = new THREE.MeshPhongMaterial({
+        color: 0x196175,
+        emissive: 0x0a2f3a,
+        specular: 0x5BB8CC,
+        shininess: 90,
+        transparent: true,
+        opacity: 0.55,
+        side: THREE.DoubleSide,
+      });
+      const mesh = new THREE.Mesh(geo, mat);
+      scene.add(mesh);
+
+      // Wireframe overlay
+      const wireMat = new THREE.MeshBasicMaterial({
+        color: 0x1E7A91,
+        wireframe: true,
+        transparent: true,
+        opacity: 0.45,
+      });
+      const wire = new THREE.Mesh(geo, wireMat);
+      scene.add(wire);
+
+      // Inner glowing core
+      const coreGeo = new THREE.SphereGeometry(0.55, 16, 16);
+      const coreMat = new THREE.MeshBasicMaterial({
+        color: 0x5BB8CC,
+        transparent: true,
+        opacity: 0.18,
+      });
+      const core = new THREE.Mesh(coreGeo, coreMat);
+      scene.add(core);
+
+      // Lights
+      const ambLight = new THREE.AmbientLight(0x196175, 1.2);
+      scene.add(ambLight);
+      const pointLight = new THREE.PointLight(0x5BB8CC, 2.5, 10);
+      pointLight.position.set(3, 3, 3);
+      scene.add(pointLight);
+      const pointLight2 = new THREE.PointLight(0x196175, 1.5, 10);
+      pointLight2.position.set(-3, -2, -2);
+      scene.add(pointLight2);
+
+      let t = 0;
+      (function animate() {
+        requestAnimationFrame(animate);
+        t += 0.012;
+        mesh.rotation.x = t * 0.4;
+        mesh.rotation.y = t * 0.6;
+        wire.rotation.x = t * 0.4;
+        wire.rotation.y = t * 0.6;
+        // Subtle float
+        mesh.position.y = Math.sin(t * 0.8) * 0.08;
+        wire.position.y = mesh.position.y;
+        core.rotation.y = -t * 0.3;
+        renderer.render(scene, camera);
+      })();
+    })();
+  </script>
+</body>
+</html>
