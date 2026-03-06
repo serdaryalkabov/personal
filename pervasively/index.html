@@ -13,12 +13,16 @@
     :root {
       --teal:        #196175;
       --teal-light:  #1E7A91;
+      --teal-bright: #2AA5C0;
       --teal-dim:    rgba(25,97,117,0.08);
+      --teal-dim2:   rgba(25,97,117,0.14);
       --bg:          #080D10;
       --bg2:         #0C1417;
       --bg3:         #101C20;
-      --border:      rgba(255,255,255,0.07);
-      --border-teal: rgba(25,97,117,0.35);
+      --bg4:         #0E1A1E;
+      --border:      rgba(255,255,255,0.06);
+      --border-teal: rgba(25,97,117,0.30);
+      --border-teal2:rgba(42,165,192,0.25);
       --text:        #F0F4F5;
       --muted:       #6B8A92;
       --muted2:      #3D5A62;
@@ -34,157 +38,217 @@
       overflow-x: hidden;
     }
 
-    /* Grid background */
-    body::after {
+    /* Dot-grid background */
+    body::before {
       content: '';
       position: fixed; inset: 0;
-      background-image:
-        linear-gradient(rgba(25,97,117,0.04) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(25,97,117,0.04) 1px, transparent 1px);
-      background-size: 48px 48px;
+      background-image: radial-gradient(rgba(25,97,117,0.18) 1px, transparent 1px);
+      background-size: 28px 28px;
       pointer-events: none;
       z-index: 0;
     }
 
-    /* NAV */
+    /* Top ambient glow */
+    body::after {
+      content: '';
+      position: fixed; top: -200px; left: 50%;
+      transform: translateX(-50%);
+      width: 1100px; height: 600px;
+      background: radial-gradient(ellipse at 50% 0%, rgba(25,97,117,0.18) 0%, transparent 68%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ─── NAV ─── */
     nav {
       position: fixed; top: 0; left: 0; right: 0; z-index: 100;
       display: flex; align-items: center; justify-content: space-between;
-      padding: 22px 56px;
+      padding: 0 56px; height: 68px;
       border-bottom: 1px solid transparent;
       transition: border-color .3s, background .3s, backdrop-filter .3s;
     }
     nav.scrolled {
       border-color: var(--border);
-      background: rgba(8,13,16,0.88);
-      backdrop-filter: blur(16px);
+      background: rgba(8,13,16,0.85);
+      backdrop-filter: blur(20px);
     }
+    .nav-left { display: flex; align-items: center; gap: 40px; }
     .logo {
-      font-family: 'Manrope', sans-serif; font-size: 20px; font-weight: 700;
+      font-family: 'Manrope', sans-serif; font-size: 19px; font-weight: 800;
       color: var(--text); text-decoration: none; letter-spacing: -0.5px;
     }
-    .logo span { color: var(--teal-light); }
+    .logo span { color: var(--teal-bright); }
+    .nav-links { display: flex; align-items: center; gap: 28px; list-style: none; }
+    .nav-links a {
+      font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 400;
+      color: var(--muted); text-decoration: none; letter-spacing: 0.01em;
+      transition: color .2s;
+    }
+    .nav-links a:hover { color: var(--text); }
+    .nav-right { display: flex; align-items: center; gap: 12px; }
     .nav-badge {
-      font-family: 'Manrope', sans-serif; font-size: 11px; font-weight: 600;
-      letter-spacing: 0.1em; text-transform: uppercase; color: var(--teal-light);
-      border: 1px solid var(--border-teal); padding: 5px 12px;
+      font-family: 'Manrope', sans-serif; font-size: 11px; font-weight: 700;
+      letter-spacing: 0.1em; text-transform: uppercase; color: var(--teal-bright);
+      border: 1px solid var(--border-teal2); padding: 6px 14px;
       border-radius: 100px; background: var(--teal-dim);
     }
+    .nav-cta {
+      font-family: 'Manrope', sans-serif; font-size: 13px; font-weight: 700;
+      color: #fff; background: var(--teal); border: none; border-radius: 8px;
+      padding: 9px 20px; cursor: pointer; letter-spacing: 0.02em;
+      text-decoration: none; transition: background .2s, transform .15s;
+    }
+    .nav-cta:hover { background: var(--teal-light); transform: translateY(-1px); }
 
-    /* HERO */
+    /* ─── HERO ─── */
     .hero {
       position: relative; min-height: 100vh;
       display: flex; align-items: center;
-      padding: 140px 56px 100px; overflow: hidden; z-index: 1;
+      padding: 120px 56px 80px; overflow: hidden; z-index: 1;
     }
-    .hero::before {
-      content: ''; position: absolute; top: -20%; left: 50%;
-      transform: translateX(-50%); width: 900px; height: 600px;
-      background: radial-gradient(ellipse at center, rgba(25,97,117,0.22) 0%, transparent 70%);
-      pointer-events: none;
-    }
-    .hero-inner { max-width: 680px; position: relative; }
+    .hero-inner { max-width: 620px; position: relative; }
 
     .hero-tag {
       display: inline-flex; align-items: center; gap: 8px;
-      border: 1px solid var(--border-teal); background: var(--teal-dim);
+      border: 1px solid var(--border-teal2); background: var(--teal-dim);
       border-radius: 100px; padding: 6px 14px 6px 8px; margin-bottom: 36px;
-      opacity: 0; animation: fadeUp .7s .1s forwards;
+      opacity: 0; animation: fadeUp .6s .1s forwards;
     }
     .tag-dot {
-      width: 6px; height: 6px; background: var(--teal-light);
-      border-radius: 50%; animation: pulse 2s infinite;
+      width: 6px; height: 6px; background: var(--teal-bright);
+      border-radius: 50%; animation: pulse 2.2s infinite;
     }
-    @keyframes pulse { 0%,100%{ opacity:1; transform:scale(1); } 50%{ opacity:.5; transform:scale(1.5); } }
+    @keyframes pulse { 0%,100%{ opacity:1; transform:scale(1); } 50%{ opacity:.4; transform:scale(1.6); } }
     .tag-text {
       font-family: 'Manrope', sans-serif; font-size: 12px; font-weight: 600;
-      color: var(--teal-light); letter-spacing: 0.04em;
+      color: var(--teal-bright); letter-spacing: 0.04em;
     }
 
+    .hero-title-row {
+      display: flex; align-items: flex-start; gap: 0;
+      margin-bottom: 26px;
+      opacity: 0; animation: fadeUp .6s .22s forwards;
+    }
     h1 {
       font-family: 'Manrope', sans-serif;
-      font-size: clamp(48px, 6.5vw, 84px); font-weight: 800;
-      line-height: 1.0; letter-spacing: -3px; color: var(--text); margin-bottom: 28px;
-      opacity: 0; animation: fadeUp .7s .25s forwards;
+      font-size: clamp(50px, 6.5vw, 82px); font-weight: 800;
+      line-height: 1.0; letter-spacing: -3px; color: var(--text);
     }
-    h1 .accent { color: var(--teal-light); }
+    h1 .accent { color: var(--teal-bright); }
+
+    #hero3d {
+      width: 150px; height: 150px; flex-shrink: 0;
+      margin-left: -12px; margin-top: -6px;
+    }
 
     .hero-sub {
-      font-size: 18px; font-weight: 300; line-height: 1.7;
-      color: var(--muted); max-width: 520px; margin-bottom: 52px;
-      opacity: 0; animation: fadeUp .7s .4s forwards;
+      font-size: 17px; font-weight: 300; line-height: 1.75;
+      color: var(--muted); max-width: 500px; margin-bottom: 44px;
+      opacity: 0; animation: fadeUp .6s .36s forwards;
     }
 
-    /* FORM */
-    .form-wrap { opacity: 0; animation: fadeUp .7s .55s forwards; }
-
-    .formspree-form { display: flex; flex-direction: column; gap: 0; max-width: 460px; }
+    /* ─── FORM ─── */
+    .form-wrap { opacity: 0; animation: fadeUp .6s .5s forwards; }
+    .formspree-form { display: flex; flex-direction: column; gap: 0; max-width: 440px; }
     .form-row {
-      display: flex; max-width: 460px;
-      border: 1px solid var(--border-teal); background: rgba(25,97,117,0.06);
-      border-radius: 10px; overflow: hidden;
+      display: flex; max-width: 440px;
+      border: 1px solid var(--border-teal2); background: rgba(25,97,117,0.07);
+      border-radius: 12px; overflow: hidden;
       transition: border-color .2s, box-shadow .2s;
     }
     .form-row:focus-within {
-      border-color: var(--teal-light);
-      box-shadow: 0 0 0 3px rgba(25,97,117,0.15);
+      border-color: var(--teal-bright);
+      box-shadow: 0 0 0 4px rgba(42,165,192,0.1);
     }
     .form-row input {
-      flex: 1; padding: 15px 20px;
+      flex: 1; padding: 14px 18px;
       background: transparent; border: none;
       font-family: 'Inter', sans-serif; font-size: 14px;
       color: var(--text); outline: none;
     }
     .form-row input::placeholder { color: var(--muted2); }
     .form-row button {
-      padding: 15px 24px; background: var(--teal); color: #fff; border: none;
+      padding: 14px 22px; background: var(--teal); color: #fff; border: none;
       font-family: 'Manrope', sans-serif; font-size: 13px; font-weight: 700;
       letter-spacing: 0.02em; white-space: nowrap; cursor: pointer;
       transition: background .2s;
     }
     .form-row button:hover { background: var(--teal-light); }
-    .form-note { margin-top: 12px; font-size: 12px; color: var(--muted2); }
-
+    .form-note { margin-top: 10px; font-size: 12px; color: var(--muted2); display: flex; align-items: center; gap: 6px; }
+    .form-note::before { content:''; display:inline-block; width:3px; height:3px; background:var(--muted2); border-radius:50%; }
     .success-msg {
       display: none; align-items: center; gap: 10px;
-      padding: 14px 18px; background: var(--teal-dim);
-      border: 1px solid var(--border-teal); border-radius: 8px; max-width: 460px;
+      padding: 13px 16px; background: var(--teal-dim);
+      border: 1px solid var(--border-teal); border-radius: 10px; max-width: 440px;
     }
     .success-msg.show { display: flex; }
-    .success-icon { color: var(--teal-light); display: flex; }
+    .success-icon { color: var(--teal-bright); display: flex; }
 
-    /* HERO CARDS */
+    /* Trusted-by row */
+    .social-proof {
+      margin-top: 32px;
+      opacity: 0; animation: fadeUp .6s .65s forwards;
+      display: flex; align-items: center; gap: 14px;
+    }
+    .avatars { display: flex; }
+    .avatars span {
+      width: 30px; height: 30px; border-radius: 50%;
+      border: 2px solid var(--bg);
+      background: linear-gradient(135deg, var(--teal) 0%, var(--teal-bright) 100%);
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Manrope', sans-serif; font-size: 10px; font-weight: 700;
+      color: rgba(255,255,255,0.85); margin-left: -8px;
+    }
+    .avatars span:first-child { margin-left: 0; }
+    .social-proof-text { font-size: 12px; color: var(--muted); }
+    .social-proof-text strong { color: var(--text); font-weight: 500; }
+
+    /* ─── HERO CARDS ─── */
     .hero-cards {
-      position: absolute; right: 56px; top: 50%; transform: translateY(-50%);
-      display: flex; flex-direction: column; gap: 14px; width: 300px;
+      position: absolute; right: 52px; top: 50%; transform: translateY(-50%);
+      display: flex; flex-direction: column; gap: 12px; width: 290px;
       opacity: 0; animation: fadeUp .8s .7s forwards;
     }
     .hcard {
-      background: var(--bg2); border: 1px solid var(--border);
-      border-radius: 12px; padding: 18px 20px; position: relative;
-      transition: border-color .3s;
+      background: rgba(12,20,23,0.75);
+      border: 1px solid var(--border);
+      border-radius: 14px; padding: 18px 20px; position: relative;
+      backdrop-filter: blur(20px);
+      transition: border-color .3s, transform .3s;
     }
-    .hcard:hover { border-color: var(--border-teal); }
-    .hcard:nth-child(2) { margin-left: 24px; border-color: var(--border-teal); background: var(--bg3); }
-    .hcard:nth-child(3) { margin-left: 12px; }
+    .hcard:hover { border-color: var(--border-teal); transform: translateX(-4px); }
+    .hcard:nth-child(2) {
+      margin-left: 22px;
+      border-color: var(--border-teal2);
+      background: rgba(16,28,32,0.8);
+    }
+    .hcard:nth-child(3) { margin-left: 11px; }
     .hcard-plat {
       font-family: 'Manrope', sans-serif; font-size: 10px; font-weight: 700;
-      letter-spacing: 0.12em; text-transform: uppercase; color: var(--teal-light); margin-bottom: 10px;
-      display: flex; align-items: center; gap: 6px;
+      letter-spacing: 0.1em; text-transform: uppercase; color: var(--teal-bright);
+      margin-bottom: 10px; display: flex; align-items: center; gap: 6px;
     }
-    .hcard-text { font-size: 12.5px; line-height: 1.6; color: var(--muted); }
+    .hcard-text { font-size: 12.5px; line-height: 1.65; color: var(--muted); }
     .hcard-foot {
       margin-top: 12px; display: flex; justify-content: space-between;
       font-size: 10px; color: var(--muted2);
     }
     .hcard-pill {
       position: absolute; top: -9px; right: 14px;
-      background: var(--teal); color: #fff;
-      font-family: 'Manrope', sans-serif; font-size: 9px; font-weight: 700;
+      background: linear-gradient(90deg, var(--teal) 0%, var(--teal-bright) 100%);
+      color: #fff; font-family: 'Manrope', sans-serif; font-size: 9px; font-weight: 700;
       padding: 3px 9px; border-radius: 100px; letter-spacing: 0.06em;
     }
+    .hcard-bar {
+      margin-top: 12px; height: 2px; background: var(--border);
+      border-radius: 2px; overflow: hidden;
+    }
+    .hcard-bar-fill {
+      height: 100%; border-radius: 2px;
+      background: linear-gradient(90deg, var(--teal), var(--teal-bright));
+    }
 
-    /* STATS */
+    /* ─── STATS ─── */
     .stats {
       position: relative; z-index: 1;
       display: grid; grid-template-columns: repeat(3,1fr);
@@ -194,175 +258,350 @@
     .stat:last-child { border-right: none; }
     .stat-num {
       font-family: 'Manrope', sans-serif; font-size: 52px; font-weight: 800;
-      letter-spacing: -2px; color: var(--text); line-height: 1; margin-bottom: 8px;
+      letter-spacing: -2.5px; color: var(--text); line-height: 1; margin-bottom: 8px;
     }
-    .stat-num span { color: var(--teal-light); }
+    .stat-num span { color: var(--teal-bright); }
     .stat-label { font-size: 13px; color: var(--muted); line-height: 1.6; }
+    .stat-bar { margin-top: 20px; height: 2px; background: var(--border); border-radius: 2px; overflow: hidden; }
+    .stat-bar-fill {
+      height: 100%; border-radius: 2px;
+      background: linear-gradient(90deg, var(--teal), var(--teal-bright));
+      transform: scaleX(0); transform-origin: left;
+      transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .reveal.visible .stat-bar-fill { transform: scaleX(1); }
 
-    /* SECTIONS */
+    /* ─── SECTIONS ─── */
     .section { position: relative; z-index: 1; padding: 100px 56px; }
     .section-eyebrow { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; }
-    .eyebrow-line { width: 24px; height: 1px; background: var(--teal); }
+    .eyebrow-line { width: 20px; height: 1px; background: var(--teal-bright); }
     .eyebrow-label {
       font-family: 'Manrope', sans-serif; font-size: 11px; font-weight: 700;
-      letter-spacing: 0.14em; text-transform: uppercase; color: var(--teal-light);
+      letter-spacing: 0.14em; text-transform: uppercase; color: var(--teal-bright);
     }
     h2 {
       font-family: 'Manrope', sans-serif;
-      font-size: clamp(32px,4vw,48px); font-weight: 800;
-      letter-spacing: -1.5px; line-height: 1.1; color: var(--text); margin-bottom: 56px;
+      font-size: clamp(32px,4vw,52px); font-weight: 800;
+      letter-spacing: -1.8px; line-height: 1.1; color: var(--text); margin-bottom: 56px;
     }
-    h2 .accent { color: var(--teal-light); }
+    h2 .accent { color: var(--teal-bright); }
 
-    /* STEPS */
+    /* ─── PROBLEM BANNER ─── */
+    .problem-banner {
+      position: relative; z-index: 1;
+      margin: 0 56px;
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      background: var(--bg2);
+      padding: 52px 64px;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 48px;
+      overflow: hidden;
+    }
+    .problem-banner::before {
+      content: '';
+      position: absolute; left: -60px; top: -60px;
+      width: 300px; height: 300px;
+      background: radial-gradient(circle, rgba(25,97,117,0.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .problem-col h3 {
+      font-family: 'Manrope', sans-serif; font-size: 22px; font-weight: 800;
+      letter-spacing: -0.5px; margin-bottom: 16px; color: var(--text);
+    }
+    .problem-col p { font-size: 15px; color: var(--muted); line-height: 1.7; }
+    .problem-divider {
+      width: 1px; background: var(--border); position: absolute;
+      top: 52px; bottom: 52px; left: 50%; transform: translateX(-50%);
+    }
+    .problem-eyebrow {
+      font-family: 'Manrope', sans-serif; font-size: 10px; font-weight: 700;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      margin-bottom: 14px; display: flex; align-items: center; gap: 8px;
+    }
+    .problem-eyebrow.bad { color: #9C6060; }
+    .problem-eyebrow.good { color: var(--teal-bright); }
+    .problem-eyebrow::before {
+      content: ''; display: inline-block; width: 6px; height: 6px; border-radius: 50%;
+    }
+    .problem-eyebrow.bad::before { background: #9C6060; }
+    .problem-eyebrow.good::before { background: var(--teal-bright); }
+
+    /* ─── STEPS ─── */
     .steps {
       display: grid; grid-template-columns: repeat(3,1fr);
       gap: 1px; background: var(--border);
-      border: 1px solid var(--border); border-radius: 16px; overflow: hidden;
+      border: 1px solid var(--border); border-radius: 20px; overflow: hidden;
     }
-    .step { background: var(--bg); padding: 44px 36px; transition: background .3s; }
+    .step {
+      background: var(--bg); padding: 44px 36px; transition: background .3s;
+      position: relative; overflow: hidden;
+    }
+    .step::after {
+      content: attr(data-num);
+      position: absolute; right: -10px; bottom: -20px;
+      font-family: 'Manrope', sans-serif; font-size: 120px; font-weight: 800;
+      color: rgba(25,97,117,0.04); letter-spacing: -4px; pointer-events: none;
+      line-height: 1;
+    }
     .step:hover { background: var(--bg2); }
     .step-idx {
-      font-family: 'Manrope', sans-serif; font-size: 11px; font-weight: 700;
-      letter-spacing: 0.1em; color: var(--teal); margin-bottom: 20px;
+      font-family: 'Manrope', sans-serif; font-size: 10px; font-weight: 700;
+      letter-spacing: 0.12em; color: var(--teal-bright); margin-bottom: 20px;
     }
     .step-icon {
-      width: 40px; height: 40px;
-      border: 1px solid var(--border-teal); border-radius: 10px;
+      width: 42px; height: 42px;
+      border: 1px solid var(--border-teal); border-radius: 12px;
       background: var(--teal-dim); display: flex; align-items: center;
-      justify-content: center; margin-bottom: 20px;
+      justify-content: center; margin-bottom: 22px;
+      transition: background .3s, border-color .3s;
     }
-    .step-icon svg { width: 20px; height: 20px; stroke: var(--teal-light); fill: none; stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round; }
+    .step:hover .step-icon { background: var(--teal-dim2); border-color: var(--border-teal2); }
+    .step-icon svg { width: 20px; height: 20px; stroke: var(--teal-bright); fill: none; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
     .step-title {
       font-family: 'Manrope', sans-serif; font-size: 18px; font-weight: 700;
       color: var(--text); margin-bottom: 12px; letter-spacing: -0.3px;
     }
-    .step-desc { font-size: 14px; color: var(--muted); line-height: 1.7; }
+    .step-desc { font-size: 13.5px; color: var(--muted); line-height: 1.7; }
     .step-time {
-      margin-top: 20px; font-family: 'Manrope', sans-serif; font-size: 11px;
-      font-weight: 600; color: var(--teal-light); letter-spacing: 0.04em;
-      display: flex; align-items: center; gap: 6px;
+      margin-top: 24px; font-family: 'Manrope', sans-serif; font-size: 11px;
+      font-weight: 600; color: var(--teal-bright); letter-spacing: 0.04em;
+      display: inline-flex; align-items: center; gap: 6px;
+      border: 1px solid var(--border-teal); background: var(--teal-dim);
+      padding: 5px 12px; border-radius: 100px;
     }
-    .step-time svg { width: 13px; height: 13px; stroke: var(--teal-light); fill: none; stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round; flex-shrink: 0; }
+    .step-time svg { width: 12px; height: 12px; stroke: var(--teal-bright); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; flex-shrink: 0; }
 
-    /* PLATFORMS */
-    .platforms { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; }
-    .platform-card {
-      background: var(--bg2); border: 1px solid var(--border); border-radius: 16px;
-      padding: 36px 32px; transition: border-color .3s, background .3s, transform .3s;
+    /* ─── FEATURES GRID ─── */
+    .features-grid {
+      display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px;
     }
-    .platform-card:hover { border-color: var(--border-teal); background: var(--bg3); transform: translateY(-4px); }
-    .platform-icon-wrap {
-      width: 44px; height: 44px; background: var(--teal-dim);
-      border: 1px solid var(--border-teal); border-radius: 12px;
+    .feature-card {
+      background: var(--bg2); border: 1px solid var(--border);
+      border-radius: 16px; padding: 36px;
+      transition: border-color .3s, background .3s;
+      position: relative; overflow: hidden;
+    }
+    .feature-card::before {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(135deg, rgba(25,97,117,0.05) 0%, transparent 60%);
+      opacity: 0; transition: opacity .3s;
+    }
+    .feature-card:hover { border-color: var(--border-teal); }
+    .feature-card:hover::before { opacity: 1; }
+    .feature-card.large { grid-column: span 2; display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; }
+    .feature-icon {
+      width: 44px; height: 44px; border-radius: 12px;
+      background: var(--teal-dim); border: 1px solid var(--border-teal);
       display: flex; align-items: center; justify-content: center; margin-bottom: 20px;
     }
-    .platform-icon-wrap svg { width: 22px; height: 22px; fill: var(--teal-light); }
+    .feature-icon svg { width: 22px; height: 22px; stroke: var(--teal-bright); fill: none; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+    .feature-title {
+      font-family: 'Manrope', sans-serif; font-size: 17px; font-weight: 700;
+      color: var(--text); letter-spacing: -0.3px; margin-bottom: 10px;
+    }
+    .feature-desc { font-size: 13.5px; color: var(--muted); line-height: 1.7; }
+    .feature-visual {
+      background: var(--bg3); border: 1px solid var(--border);
+      border-radius: 12px; padding: 20px; min-height: 160px;
+      display: flex; flex-direction: column; gap: 10px;
+    }
+    .fv-row {
+      display: flex; align-items: center; gap: 10px;
+      padding: 10px 14px; background: var(--bg2);
+      border: 1px solid var(--border); border-radius: 8px;
+    }
+    .fv-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+    .fv-dot.green { background: #3DAB7A; }
+    .fv-dot.teal { background: var(--teal-bright); }
+    .fv-dot.amber { background: #C4974A; }
+    .fv-line { flex: 1; height: 6px; border-radius: 3px; background: var(--border); }
+    .fv-line.short { width: 60%; flex: none; }
+    .fv-tag {
+      font-family: 'Manrope', sans-serif; font-size: 10px; font-weight: 700;
+      padding: 2px 8px; border-radius: 4px; letter-spacing: 0.06em;
+    }
+    .fv-tag.green { background: rgba(61,171,122,0.12); color: #3DAB7A; border: 1px solid rgba(61,171,122,0.2); }
+    .fv-tag.teal { background: var(--teal-dim); color: var(--teal-bright); border: 1px solid var(--border-teal); }
+    .fv-tag.amber { background: rgba(196,151,74,0.1); color: #C4974A; border: 1px solid rgba(196,151,74,0.2); }
+
+    /* ─── PLATFORMS ─── */
+    .platforms { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; }
+    .platform-card {
+      background: var(--bg2); border: 1px solid var(--border); border-radius: 18px;
+      padding: 36px 32px; transition: border-color .3s, background .3s, transform .3s;
+      position: relative; overflow: hidden;
+    }
+    .platform-card::after {
+      content: ''; position: absolute; bottom: -40px; right: -40px;
+      width: 120px; height: 120px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(25,97,117,0.10) 0%, transparent 70%);
+      transition: transform .4s;
+    }
+    .platform-card:hover { border-color: var(--border-teal2); background: var(--bg3); transform: translateY(-5px); }
+    .platform-card:hover::after { transform: scale(1.5); }
+    .platform-icon-wrap {
+      width: 46px; height: 46px; background: var(--teal-dim);
+      border: 1px solid var(--border-teal); border-radius: 12px;
+      display: flex; align-items: center; justify-content: center; margin-bottom: 22px;
+    }
+    .platform-icon-wrap svg { width: 22px; height: 22px; fill: var(--teal-bright); }
     .platform-name {
       font-family: 'Manrope', sans-serif; font-size: 17px; font-weight: 700;
       color: var(--text); margin-bottom: 10px; letter-spacing: -0.3px;
     }
-    .platform-desc { font-size: 13.5px; color: var(--muted); line-height: 1.7; margin-bottom: 20px; }
-    .platform-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+    .platform-desc { font-size: 13.5px; color: var(--muted); line-height: 1.7; margin-bottom: 22px; }
+    .platform-tags { display: flex; flex-wrap: wrap; gap: 7px; }
     .ptag {
       font-family: 'Manrope', sans-serif; font-size: 10px; font-weight: 600;
-      letter-spacing: 0.06em; padding: 4px 10px; border-radius: 100px;
-      border: 1px solid var(--border-teal); color: var(--teal-light); background: var(--teal-dim);
+      letter-spacing: 0.05em; padding: 4px 10px; border-radius: 100px;
+      border: 1px solid var(--border-teal); color: var(--teal-bright); background: var(--teal-dim);
     }
 
-    /* CTA BANNER */
+    /* ─── TESTIMONIALS ─── */
+    .testimonials {
+      display: grid; grid-template-columns: repeat(3,1fr); gap: 16px;
+    }
+    .testimonial {
+      background: var(--bg2); border: 1px solid var(--border); border-radius: 16px;
+      padding: 28px; transition: border-color .3s;
+    }
+    .testimonial:hover { border-color: var(--border-teal); }
+    .testimonial-text {
+      font-size: 14px; color: var(--text); line-height: 1.75;
+      margin-bottom: 22px; font-style: italic;
+    }
+    .testimonial-author { display: flex; align-items: center; gap: 12px; }
+    .testimonial-avatar {
+      width: 36px; height: 36px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--teal) 0%, var(--teal-bright) 100%);
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Manrope', sans-serif; font-size: 12px; font-weight: 700; color: #fff;
+      flex-shrink: 0;
+    }
+    .testimonial-name {
+      font-family: 'Manrope', sans-serif; font-size: 13px; font-weight: 700; color: var(--text);
+    }
+    .testimonial-role { font-size: 11px; color: var(--muted); margin-top: 2px; }
+    .stars { display: flex; gap: 2px; margin-bottom: 14px; }
+    .stars span { color: var(--teal-bright); font-size: 12px; }
+
+    /* ─── FAQ ─── */
+    .faq { max-width: 720px; }
+    .faq-item {
+      border-bottom: 1px solid var(--border); padding: 22px 0;
+      cursor: pointer;
+    }
+    .faq-item:first-child { border-top: 1px solid var(--border); }
+    .faq-q {
+      display: flex; justify-content: space-between; align-items: center;
+      font-family: 'Manrope', sans-serif; font-size: 15px; font-weight: 600;
+      color: var(--text); letter-spacing: -0.2px; user-select: none;
+    }
+    .faq-icon {
+      width: 22px; height: 22px; border-radius: 50%;
+      background: var(--teal-dim); border: 1px solid var(--border-teal);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0; transition: background .2s, transform .3s;
+      color: var(--teal-bright); font-size: 14px; font-weight: 300;
+    }
+    .faq-item.open .faq-icon { background: var(--teal); color: #fff; transform: rotate(45deg); }
+    .faq-a {
+      font-size: 14px; color: var(--muted); line-height: 1.75;
+      max-height: 0; overflow: hidden; transition: max-height .4s ease, padding .3s;
+    }
+    .faq-item.open .faq-a { max-height: 200px; padding-top: 14px; }
+
+    /* ─── CTA BANNER ─── */
     .cta-banner {
       position: relative; z-index: 1;
       margin: 0 56px 100px;
-      border: 1px solid var(--border-teal); border-radius: 20px;
-      background: linear-gradient(135deg, rgba(25,97,117,0.12) 0%, transparent 60%);
-      padding: 72px;
+      border: 1px solid var(--border-teal);
+      border-radius: 24px;
+      background: linear-gradient(135deg, rgba(25,97,117,0.14) 0%, rgba(8,13,16,0) 60%);
+      padding: 80px 72px;
       display: flex; align-items: center; justify-content: space-between; gap: 48px;
       overflow: hidden;
     }
     .cta-banner::before {
-      content: ''; position: absolute; right: -100px; top: -100px;
-      width: 400px; height: 400px;
-      background: radial-gradient(circle, rgba(25,97,117,0.15) 0%, transparent 70%);
+      content: ''; position: absolute; right: -80px; top: -80px;
+      width: 380px; height: 380px;
+      background: radial-gradient(circle, rgba(42,165,192,0.10) 0%, transparent 70%);
       pointer-events: none;
     }
-    .cta-left h2 { margin-bottom: 12px; font-size: clamp(28px,3vw,40px); }
-    .cta-left p { font-size: 15px; color: var(--muted); max-width: 380px; line-height: 1.6; }
-    .cta-right { flex-shrink: 0; min-width: 360px; }
+    .cta-banner::after {
+      content: ''; position: absolute; left: -40px; bottom: -80px;
+      width: 280px; height: 280px;
+      background: radial-gradient(circle, rgba(25,97,117,0.08) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .cta-left h2 { margin-bottom: 14px; font-size: clamp(28px,3vw,42px); }
+    .cta-left p { font-size: 15px; color: var(--muted); max-width: 400px; line-height: 1.65; }
+    .cta-right { flex-shrink: 0; min-width: 360px; position: relative; z-index: 1; }
     .cta-right .form-row { max-width: 100%; }
 
-    /* FOOTER */
+    /* ─── FOOTER ─── */
     footer {
       position: relative; z-index: 1;
-      border-top: 1px solid var(--border); padding: 28px 56px;
+      border-top: 1px solid var(--border); padding: 36px 56px;
       display: flex; align-items: center; justify-content: space-between;
     }
+    .footer-links { display: flex; gap: 28px; list-style: none; }
+    .footer-links a { font-size: 12px; color: var(--muted2); text-decoration: none; transition: color .2s; }
+    .footer-links a:hover { color: var(--muted); }
     .footer-note { font-size: 12px; color: var(--muted2); }
+    .footer-right { display: flex; flex-direction: column; align-items: flex-end; gap: 8px; }
 
-    /* 3D OBJECT */
-    .hero-title-row {
-      display: flex;
-      align-items: center;
-      gap: 0;
-      margin-bottom: 28px;
-      opacity: 0;
-      animation: fadeUp .7s .25s forwards;
-    }
-    #hero3d {
-      width: 160px;
-      height: 160px;
-      flex-shrink: 0;
-      margin-left: -16px;
-      margin-top: -8px;
-    }
-    h1 { margin-bottom: 0; opacity: 1; animation: none; }
-
+    /* ─── ANIMATIONS ─── */
     @keyframes fadeUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
-    .reveal { opacity:0; transform:translateY(24px); transition:opacity .7s,transform .7s; }
+    .reveal { opacity:0; transform:translateY(28px); transition:opacity .65s,transform .65s; }
     .reveal.visible { opacity:1; transform:none; }
+    .reveal-d1 { transition-delay: .1s; }
+    .reveal-d2 { transition-delay: .2s; }
+    .reveal-d3 { transition-delay: .3s; }
 
+    /* ─── RESPONSIVE ─── */
     @media(max-width:1100px){ .hero-cards{display:none;} }
+    @media(max-width:900px){
+      .features-grid { grid-template-columns: 1fr; }
+      .feature-card.large { grid-column: span 1; grid-template-columns: 1fr; }
+    }
     @media(max-width:768px){
-      nav{padding:18px 24px;}
-      .hero{padding:120px 24px 80px;}
-      .stats{grid-template-columns:1fr;}
-      .stat{border-right:none;border-bottom:1px solid var(--border);padding:40px 24px;}
-      .section{padding:64px 24px;}
-      .steps,.platforms{grid-template-columns:1fr;}
-      .cta-banner{flex-direction:column;margin:0 24px 64px;padding:48px 32px;}
-      .cta-right{min-width:0;width:100%;}
-      footer{flex-direction:column;gap:12px;padding:24px;text-align:center;}
-
-      /* Stack form inputs and buttons vertically */
-      .form-row {
-        flex-direction: column;
-        max-width: 100%;
-        border-radius: 10px;
-      }
-      .form-row input {
-        width: 100%;
-        border-bottom: 1px solid var(--border-teal);
-        border-radius: 10px 10px 0 0;
-        padding: 14px 16px;
-      }
-      .form-row button {
-        width: 100%;
-        padding: 14px 16px;
-        border-radius: 0 0 10px 10px;
-        text-align: center;
-        white-space: normal;
-      }
-      .success-msg { max-width: 100%; }
-      .hero-title-row { gap: 0; }
-      #hero3d { width: 100px; height: 100px; }
+      nav{ padding:0 24px; }
+      .nav-links { display: none; }
+      .hero{ padding:110px 24px 70px; }
+      .stats{ grid-template-columns:1fr; }
+      .stat{ border-right:none; border-bottom:1px solid var(--border); padding:40px 24px; }
+      .section{ padding:64px 24px; }
+      .steps,.platforms,.testimonials{ grid-template-columns:1fr; }
+      .cta-banner{ flex-direction:column; margin:0 24px 64px; padding:48px 32px; }
+      .cta-right{ min-width:0; width:100%; }
+      footer{ flex-direction:column; gap:16px; padding:24px; text-align:center; }
+      .footer-right { align-items: center; }
+      .problem-banner { grid-template-columns:1fr; margin:0 24px; gap:32px; padding:40px 32px; }
+      .problem-divider { display:none; }
+      .form-row { flex-direction:column; border-radius:12px; }
+      .form-row input { border-bottom:1px solid var(--border-teal2); border-radius:12px 12px 0 0; }
+      .form-row button { border-radius:0 0 12px 12px; text-align:center; }
+      .success-msg { max-width:100%; }
     }
   </style>
 </head>
 <body>
 
+  <!-- NAV -->
   <nav id="nav">
-    <a href="#" class="logo">Pervasive<span>ly</span></a>
-    <span class="nav-badge">Early Access</span>
+    <div class="nav-left">
+      <a href="#" class="logo">Pervasive<span>ly</span></a>
+      <ul class="nav-links">
+        <li><a href="#how">How it works</a></li>
+        <li><a href="#platforms">Platforms</a></li>
+
+      </ul>
+    </div>
+    <div class="nav-right">
+      <span class="nav-badge">Early Access</span>
+      <a href="#waitlist" class="nav-cta">Join Waitlist</a>
+    </div>
   </nav>
 
   <!-- HERO -->
@@ -372,13 +611,15 @@
         <div class="tag-dot"></div>
         <span class="tag-text">Built for developer solopreneurs</span>
       </div>
+
       <div class="hero-title-row">
         <h1>Your product<br>deserves to be<br><span class="accent">seen.</span></h1>
         <canvas id="hero3d"></canvas>
       </div>
+
       <p class="hero-sub">Pervasively turns your product knowledge into a full week of platform-ready content — Twitter/X, Instagram, LinkedIn — in under 10 minutes. No prompting. No guessing. Just post.</p>
 
-      <div class="form-wrap">
+      <div class="form-wrap" id="waitlist">
         <form class="formspree-form" action="https://formspree.io/f/xqeyzyry" method="POST" id="heroForm">
           <div class="form-row">
             <input type="email" name="email" placeholder="Enter your email address" required />
@@ -393,33 +634,43 @@
         </div>
         <p class="form-note">Free to join. No credit card required.</p>
       </div>
+
+      <div class="social-proof">
+        <div class="avatars">
+          <span>JK</span><span>ML</span><span>TW</span><span>SR</span>
+        </div>
+        <p class="social-proof-text">Join <strong>200+ solopreneurs</strong> already on the waitlist</p>
+      </div>
     </div>
 
     <!-- Floating cards -->
     <div class="hero-cards">
       <div class="hcard">
         <div class="hcard-plat">
-          <svg width="10" height="10" viewBox="0 0 24 24" fill="var(--teal-light)"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.737-8.835L1.254 2.25H8.08l4.253 5.622 5.91-5.622Zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="var(--teal-bright)"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.737-8.835L1.254 2.25H8.08l4.253 5.622 5.91-5.622Zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
           Twitter / X
         </div>
         <div class="hcard-text">Spent 3 months building. 3 days marketing. The ratio was wrong. Fixed it.</div>
+        <div class="hcard-bar"><div class="hcard-bar-fill" style="width:68%"></div></div>
         <div class="hcard-foot"><span>YourApp · Value post</span><span>218 chars</span></div>
       </div>
       <div class="hcard">
         <div class="hcard-pill">Featured</div>
         <div class="hcard-plat">
-          <svg width="10" height="10" viewBox="0 0 24 24" fill="var(--teal-light)"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="var(--teal-bright)"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
           LinkedIn
         </div>
         <div class="hcard-text">The hardest part of building solo isn't the code. It's staying visible while you build. Here's the system I use.</div>
+        <div class="hcard-bar"><div class="hcard-bar-fill" style="width:92%"></div></div>
         <div class="hcard-foot"><span>Story post · Week 2</span><span>Ready</span></div>
       </div>
       <div class="hcard">
         <div class="hcard-plat">
-          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="var(--teal-light)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="var(--teal-bright)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
           Instagram
         </div>
         <div class="hcard-text">Nobody finds your product if you don't talk about it. Here's how I changed that ↓</div>
+        <div class="hcard-bar"><div class="hcard-bar-fill" style="width:55%"></div></div>
         <div class="hcard-foot"><span>Hook post · Day 4</span><span>141 chars</span></div>
       </div>
     </div>
@@ -430,26 +681,45 @@
     <div class="stat reveal">
       <div class="stat-num">10<span>min</span></div>
       <div class="stat-label">From login to a full week<br>of scheduled content</div>
+      <div class="stat-bar"><div class="stat-bar-fill"></div></div>
     </div>
-    <div class="stat reveal">
+    <div class="stat reveal reveal-d1">
       <div class="stat-num">3<span>×</span></div>
       <div class="stat-label">Platforms covered in<br>a single generation</div>
+      <div class="stat-bar"><div class="stat-bar-fill"></div></div>
     </div>
-    <div class="stat reveal">
+    <div class="stat reveal reveal-d2">
       <div class="stat-num">0<span>hrs</span></div>
       <div class="stat-label">Repeated setup after<br>your first product brief</div>
+      <div class="stat-bar"><div class="stat-bar-fill"></div></div>
     </div>
   </div>
 
-  <!-- HOW IT WORKS -->
+  <!-- PROBLEM / SOLUTION -->
   <section class="section">
+    <div class="problem-banner reveal">
+      <div class="problem-divider"></div>
+      <div class="problem-col">
+        <div class="problem-eyebrow bad">The problem</div>
+        <h3>You're shipping. Nobody knows.</h3>
+        <p>Indie developers spend weeks building great tools, then stay invisible because content creation feels like a full-time job. A blank page, a blinking cursor, and no idea where to start.</p>
+      </div>
+      <div class="problem-col">
+        <div class="problem-eyebrow good">The solution</div>
+        <h3>Your product becomes content.</h3>
+        <p>Tell us what you built once. Pervasively generates a full week of platform-native posts across Twitter, LinkedIn, and Instagram — tuned for each channel, in under 10 minutes.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section class="section" id="how" style="padding-top:0">
     <div class="section-eyebrow reveal"><div class="eyebrow-line"></div><span class="eyebrow-label">How it works</span></div>
     <h2 class="reveal">Three steps.<br><span class="accent">Ten minutes.</span></h2>
     <div class="steps">
-      <div class="step reveal">
+      <div class="step reveal" data-num="1">
         <div class="step-idx">STEP 01</div>
         <div class="step-icon">
-          <!-- Clipboard / document icon -->
           <svg viewBox="0 0 24 24"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/><line x1="9" y1="12" x2="15" y2="12"/><line x1="9" y1="16" x2="13" y2="16"/></svg>
         </div>
         <div class="step-title">Tell us your product</div>
@@ -459,10 +729,9 @@
           ~15 minutes, one time only
         </div>
       </div>
-      <div class="step reveal">
+      <div class="step reveal reveal-d1" data-num="2">
         <div class="step-idx">STEP 02</div>
         <div class="step-icon">
-          <!-- Zap / lightning icon -->
           <svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
         </div>
         <div class="step-title">Generate a full week</div>
@@ -472,10 +741,9 @@
           ~30 seconds per batch
         </div>
       </div>
-      <div class="step reveal">
+      <div class="step reveal reveal-d2" data-num="3">
         <div class="step-idx">STEP 03</div>
         <div class="step-icon">
-          <!-- Send / rocket icon -->
           <svg viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
         </div>
         <div class="step-title">Review & schedule</div>
@@ -488,28 +756,88 @@
     </div>
   </section>
 
-  <!-- PLATFORMS -->
+  <!-- FEATURES -->
   <section class="section" style="border-top:1px solid var(--border);padding-top:80px;">
+    <div class="section-eyebrow reveal"><div class="eyebrow-line"></div><span class="eyebrow-label">Features</span></div>
+    <h2 class="reveal">Everything you need.<br><span class="accent">Nothing you don't.</span></h2>
+    <div class="features-grid">
+      <div class="feature-card large reveal">
+        <div>
+          <div class="feature-icon">
+            <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+          </div>
+          <div class="feature-title">Content DNA — set it once</div>
+          <div class="feature-desc">Your product brief is stored as a reusable profile. Every batch generation inherits your voice, audience, and story without you lifting a finger.</div>
+        </div>
+        <div class="feature-visual">
+          <div class="fv-row">
+            <div class="fv-dot teal"></div>
+            <div class="fv-line"></div>
+            <div class="fv-tag teal">Voice</div>
+          </div>
+          <div class="fv-row">
+            <div class="fv-dot green"></div>
+            <div class="fv-line short"></div>
+            <div class="fv-tag green">Audience</div>
+          </div>
+          <div class="fv-row">
+            <div class="fv-dot amber"></div>
+            <div class="fv-line"></div>
+            <div class="fv-tag amber">Story</div>
+          </div>
+        </div>
+      </div>
+      <div class="feature-card reveal">
+        <div class="feature-icon">
+          <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        </div>
+        <div class="feature-title">Platform-native tone</div>
+        <div class="feature-desc">Each post is written for its platform. Twitter hooks are punchy. LinkedIn posts tell stories. Instagram captions drive follows. No copy-paste, no compromise.</div>
+      </div>
+      <div class="feature-card reveal reveal-d1">
+        <div class="feature-icon">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        </div>
+        <div class="feature-title">One-click regeneration</div>
+        <div class="feature-desc">Don't like a post? Regenerate it in isolation without touching the rest of your week. Iterate fast, stay in flow.</div>
+      </div>
+      <div class="feature-card reveal">
+        <div class="feature-icon">
+          <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        </div>
+        <div class="feature-title">Scheduled publishing</div>
+        <div class="feature-desc">Connect your accounts once. Schedule the whole week in a few clicks. Posts go out while you build the next thing.</div>
+      </div>
+      <div class="feature-card reveal reveal-d1">
+        <div class="feature-icon">
+          <svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+        </div>
+        <div class="feature-title">Engagement insights</div>
+        <div class="feature-desc">Track which content performs across platforms. Pervasively learns what resonates and fine-tunes future batches automatically.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PLATFORMS -->
+  <section class="section" id="platforms" style="border-top:1px solid var(--border);padding-top:80px;">
     <div class="section-eyebrow reveal"><div class="eyebrow-line"></div><span class="eyebrow-label">Platform coverage</span></div>
     <h2 class="reveal">Content built for<br><span class="accent">every channel.</span></h2>
     <div class="platforms">
       <div class="platform-card reveal">
         <div class="platform-icon-wrap">
-          <!-- X / Twitter logo -->
           <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.737-8.835L1.254 2.25H8.08l4.253 5.622 5.91-5.622Zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
         </div>
         <div class="platform-name">Twitter / X</div>
         <div class="platform-desc">Hook-first tweets and threads optimized for engagement. No hashtag stuffing — sharp, shareable content within character limits.</div>
         <div class="platform-tags"><span class="ptag">Threads</span><span class="ptag">Takes</span><span class="ptag">Feature drops</span><span class="ptag">Insights</span></div>
       </div>
-      <div class="platform-card reveal">
+      <div class="platform-card reveal reveal-d1">
         <div class="platform-icon-wrap">
-          <!-- Instagram logo with gradient -->
           <svg viewBox="0 0 24 24" width="22" height="22" xmlns="http://www.w3.org/2000/svg">
             <defs>
               <linearGradient id="ig-grad" x1="0%" y1="100%" x2="100%" y2="0%">
                 <stop offset="0%" style="stop-color:#1E7A91"/>
-                <stop offset="100%" style="stop-color:#5BB8CC"/>
+                <stop offset="100%" style="stop-color:#2AA5C0"/>
               </linearGradient>
             </defs>
             <rect x="2" y="2" width="20" height="20" rx="6" fill="none" stroke="url(#ig-grad)" stroke-width="1.8"/>
@@ -521,9 +849,8 @@
         <div class="platform-desc">Caption-first content with a hook before the fold, value in the body, and a clear CTA at the close. Visual direction included.</div>
         <div class="platform-tags"><span class="ptag">Hooks</span><span class="ptag">Carousels</span><span class="ptag">BTS</span></div>
       </div>
-      <div class="platform-card reveal">
+      <div class="platform-card reveal reveal-d2">
         <div class="platform-icon-wrap">
-          <!-- LinkedIn logo -->
           <svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
         </div>
         <div class="platform-name">LinkedIn</div>
@@ -559,11 +886,19 @@
   <!-- FOOTER -->
   <footer>
     <a href="#" class="logo">Pervasive<span>ly</span></a>
-    <span class="footer-note">© 2025 Pervasively · Built by a solopreneur, for solopreneurs</span>
+    <ul class="footer-links">
+      <li><a href="#">Privacy</a></li>
+      <li><a href="#">Terms</a></li>
+      <li><a href="#">Contact</a></li>
+    </ul>
+    <div class="footer-right">
+      <span class="footer-note">© 2025 Pervasively</span>
+      <span class="footer-note">Built by a solopreneur, for solopreneurs</span>
+    </div>
   </footer>
 
   <script>
-    // Nav scroll effect
+    // Nav scroll
     window.addEventListener('scroll', () =>
       document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 40)
     );
@@ -571,21 +906,27 @@
     // Scroll reveal
     const obs = new IntersectionObserver(entries =>
       entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); }}),
-      { threshold: 0.12 }
+      { threshold: 0.10 }
     );
     document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
 
-    // Formspree AJAX submit
+    // FAQ accordion
+    document.querySelectorAll('.faq-item').forEach(item => {
+      item.querySelector('.faq-q').addEventListener('click', () => {
+        const wasOpen = item.classList.contains('open');
+        document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+        if (!wasOpen) item.classList.add('open');
+      });
+    });
+
+    // Formspree AJAX
     async function handleForm(formId, successId) {
       const form = document.getElementById(formId);
       form.addEventListener('submit', async e => {
         e.preventDefault();
         const data = new FormData(form);
         try {
-          const res = await fetch(form.action, {
-            method: 'POST', body: data,
-            headers: { 'Accept': 'application/json' }
-          });
+          const res = await fetch(form.action, { method: 'POST', body: data, headers: { 'Accept': 'application/json' } });
           if (res.ok) {
             form.style.display = 'none';
             document.getElementById(successId).classList.add('show');
@@ -593,79 +934,51 @@
         } catch(err) { form.submit(); }
       });
     }
-
     handleForm('heroForm', 'heroSuccess');
     handleForm('ctaForm', 'ctaSuccess');
 
-    // Three.js 3D Object
+    // Three.js 3D
     (function() {
       const canvas = document.getElementById('hero3d');
       const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
       renderer.setPixelRatio(window.devicePixelRatio);
-      renderer.setSize(160, 160);
-
+      renderer.setSize(150, 150);
       const scene = new THREE.Scene();
       const camera = new THREE.PerspectiveCamera(45, 1, 0.1, 100);
       camera.position.set(0, 0, 4.5);
 
-      // Icosahedron with wireframe overlay
       const geo = new THREE.IcosahedronGeometry(1.35, 1);
-
-      // Solid mesh — teal glass-like material
       const mat = new THREE.MeshPhongMaterial({
-        color: 0x196175,
-        emissive: 0x0a2f3a,
-        specular: 0x5BB8CC,
-        shininess: 90,
-        transparent: true,
-        opacity: 0.55,
-        side: THREE.DoubleSide,
+        color: 0x196175, emissive: 0x0a2f3a, specular: 0x2AA5C0,
+        shininess: 100, transparent: true, opacity: 0.55, side: THREE.DoubleSide,
       });
       const mesh = new THREE.Mesh(geo, mat);
       scene.add(mesh);
 
-      // Wireframe overlay
-      const wireMat = new THREE.MeshBasicMaterial({
-        color: 0x1E7A91,
-        wireframe: true,
-        transparent: true,
-        opacity: 0.45,
-      });
+      const wireMat = new THREE.MeshBasicMaterial({ color: 0x2AA5C0, wireframe: true, transparent: true, opacity: 0.38 });
       const wire = new THREE.Mesh(geo, wireMat);
       scene.add(wire);
 
-      // Inner glowing core
-      const coreGeo = new THREE.SphereGeometry(0.55, 16, 16);
-      const coreMat = new THREE.MeshBasicMaterial({
-        color: 0x5BB8CC,
-        transparent: true,
-        opacity: 0.18,
-      });
+      const coreGeo = new THREE.SphereGeometry(0.5, 16, 16);
+      const coreMat = new THREE.MeshBasicMaterial({ color: 0x2AA5C0, transparent: true, opacity: 0.15 });
       const core = new THREE.Mesh(coreGeo, coreMat);
       scene.add(core);
 
-      // Lights
-      const ambLight = new THREE.AmbientLight(0x196175, 1.2);
-      scene.add(ambLight);
-      const pointLight = new THREE.PointLight(0x5BB8CC, 2.5, 10);
-      pointLight.position.set(3, 3, 3);
-      scene.add(pointLight);
-      const pointLight2 = new THREE.PointLight(0x196175, 1.5, 10);
-      pointLight2.position.set(-3, -2, -2);
-      scene.add(pointLight2);
+      scene.add(new THREE.AmbientLight(0x196175, 1.2));
+      const p1 = new THREE.PointLight(0x2AA5C0, 2.5, 10); p1.position.set(3,3,3); scene.add(p1);
+      const p2 = new THREE.PointLight(0x196175, 1.5, 10); p2.position.set(-3,-2,-2); scene.add(p2);
 
       let t = 0;
       (function animate() {
         requestAnimationFrame(animate);
-        t += 0.012;
-        mesh.rotation.x = t * 0.4;
-        mesh.rotation.y = t * 0.6;
-        wire.rotation.x = t * 0.4;
-        wire.rotation.y = t * 0.6;
-        // Subtle float
-        mesh.position.y = Math.sin(t * 0.8) * 0.08;
+        t += 0.011;
+        mesh.rotation.x = t * 0.38;
+        mesh.rotation.y = t * 0.58;
+        wire.rotation.x = t * 0.38;
+        wire.rotation.y = t * 0.58;
+        mesh.position.y = Math.sin(t * 0.75) * 0.09;
         wire.position.y = mesh.position.y;
-        core.rotation.y = -t * 0.3;
+        core.rotation.y = -t * 0.28;
         renderer.render(scene, camera);
       })();
     })();
