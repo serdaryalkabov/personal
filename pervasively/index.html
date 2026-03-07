@@ -105,7 +105,7 @@
     .hero {
       position: relative; min-height: 100vh;
       display: flex; align-items: center; justify-content: center;
-      padding: 120px 56px 80px; overflow: hidden; z-index: 1;
+      padding: 88px 56px 40px; overflow: hidden; z-index: 1;
       text-align: center;
     }
     .hero-inner { max-width: 760px; position: relative; display: flex; flex-direction: column; align-items: center; }
@@ -113,7 +113,7 @@
     .hero-tag {
       display: inline-flex; align-items: center; gap: 8px;
       border: 1px solid var(--border-teal2); background: var(--teal-dim);
-      border-radius: 100px; padding: 6px 14px 6px 8px; margin-bottom: 32px;
+      border-radius: 100px; padding: 6px 14px 6px 8px; margin-bottom: 20px;
       opacity: 0; animation: fadeUp .6s .1s forwards;
       align-self: center;
     }
@@ -129,27 +129,27 @@
 
     .hero-title-row {
       display: flex; align-items: center; justify-content: center;
-      flex-direction: column; gap: 8px;
-      margin-bottom: 28px;
+      flex-direction: column; gap: 4px;
+      margin-bottom: 18px;
       opacity: 0; animation: fadeUp .6s .22s forwards;
     }
     h1 {
       font-family: 'Manrope', sans-serif;
-      font-size: clamp(40px, 5.5vw, 72px); font-weight: 800;
+      font-size: clamp(36px, 4.8vw, 64px); font-weight: 800;
       line-height: 1.0; letter-spacing: -3px; color: var(--text);
       text-align: center;
     }
     h1 .accent { color: var(--teal-bright); }
 
     #hero3d {
-      width: 200px; height: 200px; flex-shrink: 0;
+      width: 150px; height: 150px; flex-shrink: 0;
       margin: 0;
       filter: drop-shadow(0 0 40px rgba(42,165,192,0.25));
     }
 
     .hero-sub {
-      font-size: 18px; font-weight: 300; line-height: 1.75;
-      color: var(--muted); max-width: 540px; margin-bottom: 44px;
+      font-size: 16px; font-weight: 300; line-height: 1.65;
+      color: var(--muted); max-width: 500px; margin-bottom: 28px;
       opacity: 0; animation: fadeUp .6s .36s forwards;
       text-align: center;
     }
@@ -686,7 +686,7 @@
     @media(max-width:768px){
       nav{ padding:0 24px; }
       .nav-links { display: none; }
-      .hero{ padding:110px 24px 70px; }
+      .hero{ padding:80px 24px 40px; }
       .stats{ grid-template-columns:1fr; }
       .stat{ border-right:none; border-bottom:1px solid var(--border); padding:40px 24px; }
       .section{ padding:64px 24px; }
@@ -1134,7 +1134,7 @@
       const canvas = document.getElementById('hero3d');
       const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
       renderer.setPixelRatio(window.devicePixelRatio);
-      renderer.setSize(200, 200);
+      renderer.setSize(150, 150);
       const scene = new THREE.Scene();
       const camera = new THREE.PerspectiveCamera(45, 1, 0.1, 100);
       camera.position.set(0, 0, 4.5);
