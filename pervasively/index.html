@@ -52,10 +52,10 @@
     /* Top ambient glow */
     body::after {
       content: '';
-      position: fixed; top: -200px; left: 50%;
+      position: fixed; top: -100px; left: 50%;
       transform: translateX(-50%);
-      width: 1100px; height: 600px;
-      background: radial-gradient(ellipse at 50% 0%, rgba(25,97,117,0.18) 0%, transparent 68%);
+      width: 900px; height: 700px;
+      background: radial-gradient(ellipse at 50% 0%, rgba(25,97,117,0.22) 0%, transparent 65%);
       pointer-events: none;
       z-index: 0;
     }
@@ -104,16 +104,18 @@
     /* ─── HERO ─── */
     .hero {
       position: relative; min-height: 100vh;
-      display: flex; align-items: center;
+      display: flex; align-items: center; justify-content: center;
       padding: 120px 56px 80px; overflow: hidden; z-index: 1;
+      text-align: center;
     }
-    .hero-inner { max-width: 620px; position: relative; }
+    .hero-inner { max-width: 760px; position: relative; display: flex; flex-direction: column; align-items: center; }
 
     .hero-tag {
       display: inline-flex; align-items: center; gap: 8px;
       border: 1px solid var(--border-teal2); background: var(--teal-dim);
-      border-radius: 100px; padding: 6px 14px 6px 8px; margin-bottom: 36px;
+      border-radius: 100px; padding: 6px 14px 6px 8px; margin-bottom: 32px;
       opacity: 0; animation: fadeUp .6s .1s forwards;
+      align-self: center;
     }
     .tag-dot {
       width: 6px; height: 6px; background: var(--teal-bright);
@@ -126,33 +128,37 @@
     }
 
     .hero-title-row {
-      display: flex; align-items: flex-start; gap: 0;
-      margin-bottom: 26px;
+      display: flex; align-items: center; justify-content: center;
+      flex-direction: column; gap: 8px;
+      margin-bottom: 28px;
       opacity: 0; animation: fadeUp .6s .22s forwards;
     }
     h1 {
       font-family: 'Manrope', sans-serif;
-      font-size: clamp(50px, 6.5vw, 82px); font-weight: 800;
+      font-size: clamp(52px, 7vw, 92px); font-weight: 800;
       line-height: 1.0; letter-spacing: -3px; color: var(--text);
+      text-align: center;
     }
     h1 .accent { color: var(--teal-bright); }
 
     #hero3d {
-      width: 150px; height: 150px; flex-shrink: 0;
-      margin-left: -12px; margin-top: -6px;
+      width: 260px; height: 260px; flex-shrink: 0;
+      margin: 0;
+      filter: drop-shadow(0 0 40px rgba(42,165,192,0.25));
     }
 
     .hero-sub {
-      font-size: 17px; font-weight: 300; line-height: 1.75;
-      color: var(--muted); max-width: 500px; margin-bottom: 44px;
+      font-size: 18px; font-weight: 300; line-height: 1.75;
+      color: var(--muted); max-width: 540px; margin-bottom: 44px;
       opacity: 0; animation: fadeUp .6s .36s forwards;
+      text-align: center;
     }
 
     /* ─── FORM ─── */
-    .form-wrap { opacity: 0; animation: fadeUp .6s .5s forwards; }
-    .formspree-form { display: flex; flex-direction: column; gap: 0; max-width: 440px; }
+    .form-wrap { opacity: 0; animation: fadeUp .6s .5s forwards; display: flex; flex-direction: column; align-items: center; }
+    .formspree-form { display: flex; flex-direction: column; gap: 0; max-width: 440px; width: 100%; }
     .form-row {
-      display: flex; max-width: 440px;
+      display: flex; max-width: 440px; width: 100%;
       border: 1px solid var(--border-teal2); background: rgba(25,97,117,0.07);
       border-radius: 12px; overflow: hidden;
       transition: border-color .2s, box-shadow .2s;
@@ -175,12 +181,13 @@
       transition: background .2s;
     }
     .form-row button:hover { background: var(--teal-light); }
-    .form-note { margin-top: 10px; font-size: 12px; color: var(--muted2); display: flex; align-items: center; gap: 6px; }
+    .form-note { margin-top: 10px; font-size: 12px; color: var(--muted2); display: flex; align-items: center; gap: 6px; justify-content: center; }
     .form-note::before { content:''; display:inline-block; width:3px; height:3px; background:var(--muted2); border-radius:50%; }
     .success-msg {
       display: none; align-items: center; gap: 10px;
       padding: 13px 16px; background: var(--teal-dim);
       border: 1px solid var(--border-teal); border-radius: 10px; max-width: 440px;
+      justify-content: center;
     }
     .success-msg.show { display: flex; }
     .success-icon { color: var(--teal-bright); display: flex; }
@@ -190,6 +197,7 @@
       margin-top: 32px;
       opacity: 0; animation: fadeUp .6s .65s forwards;
       display: flex; align-items: center; gap: 14px;
+      justify-content: center;
     }
     .avatars { display: flex; }
     .avatars span {
@@ -206,9 +214,7 @@
 
     /* ─── HERO CARDS ─── */
     .hero-cards {
-      position: absolute; right: 52px; top: 50%; transform: translateY(-50%);
-      display: flex; flex-direction: column; gap: 12px; width: 290px;
-      opacity: 0; animation: fadeUp .8s .7s forwards;
+      display: none;
     }
     .hcard {
       background: rgba(12,20,23,0.75);
@@ -698,8 +704,8 @@
       </div>
 
       <div class="hero-title-row">
-        <h1>Your product<br>deserves to be<br><span class="accent">seen.</span></h1>
         <canvas id="hero3d"></canvas>
+        <h1>Your product<br>deserves to be<br><span class="accent">seen.</span></h1>
       </div>
 
       <p class="hero-sub">Pervasively turns your product knowledge into a full week of platform-ready content — Twitter/X, Instagram, LinkedIn — in under 10 minutes. No prompting. No guessing. Just post.</p>
@@ -1098,7 +1104,7 @@
       const canvas = document.getElementById('hero3d');
       const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
       renderer.setPixelRatio(window.devicePixelRatio);
-      renderer.setSize(150, 150);
+      renderer.setSize(260, 260);
       const scene = new THREE.Scene();
       const camera = new THREE.PerspectiveCamera(45, 1, 0.1, 100);
       camera.position.set(0, 0, 4.5);
