@@ -6,7 +6,7 @@
   "rewrites": [
     {
       "source": "/books/monk",
-      "destination": "/books.monk.epub"
+      "destination": "/books/monk.epub"
     }
   ]
 }
