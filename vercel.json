@@ -2,5 +2,11 @@
   "routes": [
     { "src": "/", "dest": "/index.html" },
     { "src": "/mindduel/(.*)", "dest": "/mindduel/$1" }
+  ],
+  "rewrites": [
+    {
+      "source": "/books/monk",
+      "destination": "/books.monk.epub"
+    }
   ]
 }
